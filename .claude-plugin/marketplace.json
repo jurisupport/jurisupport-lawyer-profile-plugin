@@ -1,14 +1,14 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "jurisupport-lawyer-profile-plugin",
-  "description": "JuriSupport lawyer profile and private strength self-review plugin marketplace.",
+  "description": "JuriSupport lawyer personal profile completion plugin marketplace.",
   "owner": {
     "name": "JuriSupport"
   },
   "plugins": [
     {
       "name": "jurisupport-lawyer-profile",
-      "description": "Private lawyer strength self-review from lawyer-selected local work materials, with optional JuriSupport profile draft JSON submission through a draft-only MCP tool.",
+      "description": "Complete a private personal lawyer profile from local work materials, with optional JuriSupport profile draft upload.",
       "author": {
         "name": "JuriSupport"
       },

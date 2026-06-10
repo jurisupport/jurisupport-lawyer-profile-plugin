@@ -53,7 +53,7 @@
   "internalEvidenceMap": [],
   "compliance": {
     "riskFlags": ["needs_lawyer_approval"],
-    "reviewNotes": ["공개 전 JuriSupport 검토와 변호사 최종 승인이 필요합니다."],
+    "reviewNotes": ["JuriSupport에 올리기 전 변호사 최종 확인과 JuriSupport 검토가 필요합니다."],
     "publicationVerdict": "needs_review"
   },
   "lawyerApprovalRequired": true,

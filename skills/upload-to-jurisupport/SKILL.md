@@ -1,19 +1,19 @@
 ---
-description: Submit a JuriSupport lawyer profile draft JSON through the draft-only MCP tool, or prepare a manual upload package if MCP is unavailable.
+description: Upload a lawyer-confirmed JuriSupport profile draft, or prepare a manual upload package, after a lawyer completes their personal profile.
 ---
 
-# Upload Via MCP
+# Upload To JuriSupport
 
-Submit a JuriSupport lawyer profile draft through MCP only when the lawyer explicitly asks.
+Put a completed personal profile draft on JuriSupport only when the lawyer explicitly asks.
 
-This workflow never publishes a profile and never approves public search exposure.
+This workflow receives the optional `jurisupport-profile-draft.json` created after `jurisupport-personal-profile.md`. It never publishes a profile and never approves public search exposure.
 
 ## Hard Gates
 
 Proceed only if:
 
 1. `jurisupport-profile-draft.json` exists or the lawyer pasted equivalent draft JSON.
-2. The lawyer confirms the draft may be submitted to JuriSupport as a draft.
+2. The lawyer confirms the draft may be uploaded to JuriSupport.
 3. The environment has the JuriSupport MCP tool `upload_lawyer_search_profile_draft`, or the lawyer wants a manual upload package.
 
 If any gate is missing, explain what is missing and stop before upload.

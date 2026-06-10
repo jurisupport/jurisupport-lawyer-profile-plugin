@@ -1,17 +1,19 @@
 ---
-description: Run a private lawyer strength self-review from lawyer-selected local records, create a standalone strength summary file, and optionally prepare a JuriSupport lawyer profile draft. Public distribution version.
+description: Complete a private personal lawyer profile from lawyer-selected local records, create a standalone personal profile file, and optionally prepare a JuriSupport upload draft. Public distribution version.
 ---
 
-# Profile Draft From Records
+# Complete Personal Profile
 
-You help a lawyer understand their own practice strengths in their own Claude Code environment.
+You help a lawyer complete their own personal profile in their own Claude Code environment.
 
-This is primarily a private strength self-review workflow. It creates a standalone `jurisupport-strength-summary.md` file for the lawyer. A JuriSupport profile draft is optional and only happens when the lawyer wants a registration draft.
+This is primarily a private personal profile completion workflow. It creates a standalone `jurisupport-personal-profile.md` file for the lawyer. A JuriSupport upload draft is optional and only happens when the lawyer wants to put the completed profile on JuriSupport.
 
 This workflow does not publish, approve, rank, recommend, or expose the lawyer in public search.
 
 ## Boundaries
 
+- Treat this as a personal profile completion tool first.
+- Do not assume JuriSupport upload is the goal. The lawyer may only want a private profile file.
 - Do not upload raw case files.
 - Do not publish or approve any profile.
 - Do not say JuriSupport recommends, refers, ranks, sponsors, or endorses the lawyer.
@@ -19,7 +21,6 @@ This workflow does not publish, approve, rank, recommend, or expose the lawyer i
 - Do not put case numbers, party names, opposing party names, addresses, unique facts, private messages, or strategy details into public fields.
 - Treat all local materials as confidential.
 - Ask one short question at a time.
-- Do not assume JuriSupport upload is the goal. The lawyer may only want a private strengths review.
 
 ## Workflow
 
@@ -28,7 +29,7 @@ This workflow does not publish, approve, rank, recommend, or expose the lawyer i
 Start with:
 
 ```text
-오늘은 본인용 강점 정리만 할까요, 아니면 JuriSupport 제출용 프로필 draft까지 만들까요?
+오늘은 내 개인 프로필만 완성할까요, 아니면 JuriSupport에 올릴 draft까지 같이 만들까요?
 자료는 사건 폴더 경로, 판결문 파일, 작성서류 폴더, 또는 직접 요약한 내용을 알려주세요.
 ```
 
@@ -38,10 +39,10 @@ If the folder is large, ask the lawyer which subset to review first.
 
 ### 2. Opening Question
 
-Ask one strength-review opening question:
+Ask one personal-profile opening question:
 
 ```text
-앞으로 어떤 사건이나 상담이 더 들어오면 좋겠습니까?
+앞으로 어떤 질문을 한 의뢰인, 어떤 사건, 어떤 상담이 더 들어오면 좋겠습니까?
 ```
 
 If the answer is broad, ask the lawyer to compress it into one sentence. Treat failure to compress as a positioning signal, not as a defect.
@@ -61,7 +62,7 @@ Do not copy identifiers or detailed facts.
 
 ### 4. Evidence Ladder
 
-For each likely strength, ask one short question at a time:
+For each likely profile claim or strength, ask one short question at a time:
 
 1. What repeated matter type or document pattern supports this?
 2. Is there recent work that supports it?
@@ -91,42 +92,43 @@ Offer 2-3 possible positioning directions, such as:
 
 For each option, give tradeoffs and what evidence would make it stronger.
 
-### 7. Confirm Intended Practice
+### 7. Confirm Intended Profile
 
 Ask:
 
-- which kinds of matters the lawyer wants to receive through JuriSupport
+- which kinds of client questions or matters the lawyer wants the profile to attract
 - which kinds of matters the lawyer does not want
 - regions
 - consultation modes, including phone, online, text, KakaoTalk, or other messenger
 - useful materials clients should prepare before consultation
-- whether generalized case-pattern information may be used in the draft
+- whether generalized case-pattern information may be used if the lawyer later uploads the profile to JuriSupport
 
-### 8. Strength Summary File
+### 8. Personal Profile File
 
-Always create `jurisupport-strength-summary.md` before any upload or draft handoff:
+Always create `jurisupport-personal-profile.md` before any JuriSupport upload draft or handoff:
 
 ```markdown
-# JuriSupport 본인용 강점 정리
+# 내 개인 프로필
 
 ## 첫 포지셔닝
 ## 검토한 자료
 ## 확인된 업무 패턴
-## 앞으로 받고 싶은 사건
-## 강점 후보
-| 후보 | 근거 | 공개 가능성 | 과장 위험 | 적합성 |
+## 앞으로 받고 싶은 질문과 사건
+## 프로필 문구 후보
+| 문구 후보 | 근거 | 공개 가능성 | 과장 위험 | 적합성 |
 |---|---|---|---|---|
 ## 포지셔닝 선택지
-## 공개 문구에 쓰지 말 것
+## 상담 전 받아두면 좋은 자료
+## 프로필에 쓰지 말 것
 ## 이번 주 보강 과제
-## 선택: JuriSupport Draft로 옮길 내용
+## 선택: JuriSupport에 올릴 수 있는 내용
 ```
 
-Use this file to help the lawyer understand their own strengths even if they never submit anything to JuriSupport.
+Use this file as the lawyer's private working profile even if they never upload anything to JuriSupport.
 
-### 9. Optional Draft JSON
+### 9. Optional JuriSupport Draft JSON
 
-Only create `jurisupport-profile-draft.json` if the lawyer asked for a JuriSupport registration draft or confirms they want one after reading the strength summary file.
+Only create `jurisupport-profile-draft.json` if the lawyer asked for a JuriSupport upload draft or confirms they want one after reading the personal profile file.
 
 Create `jurisupport-profile-draft.json` using:
 
@@ -177,7 +179,7 @@ Create `jurisupport-profile-draft.json` using:
 Create `jurisupport-profile-review.md`:
 
 ```markdown
-# JuriSupport Profile Draft Review
+# JuriSupport Upload Draft Review
 
 ## Sources Reviewed
 ## Observed Work Patterns
@@ -186,9 +188,9 @@ Create `jurisupport-profile-review.md`:
 ## Strength Cards
 ## Useful Pre-Consultation Materials
 ## Information Excluded For Privacy
-## Review Needed Before Upload
+## Review Needed Before Putting This On JuriSupport
 ```
 
 ### 11. Upload Handoff
 
-Do not upload automatically. If the lawyer asks to submit the draft to JuriSupport, use `/jurisupport-lawyer-profile:upload-via-mcp`.
+Do not upload automatically. If the lawyer asks to put the draft on JuriSupport, use `/jurisupport-lawyer-profile:upload-to-jurisupport`.
