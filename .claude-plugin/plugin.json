@@ -1,7 +1,7 @@
 {
   "name": "jurisupport-lawyer-profile",
-  "description": "Claude Code workflow for completing a lawyer's private personal profile from local work materials, with optional JuriSupport profile draft upload.",
-  "version": "0.2.0",
+  "description": "Claude Code workflow for completing a lawyer's private personal profile from local work materials, with optional JuriSupport profile draft upload after web consent.",
+  "version": "0.2.1",
   "author": {
     "name": "JuriSupport"
   }

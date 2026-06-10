@@ -8,7 +8,7 @@
   "plugins": [
     {
       "name": "jurisupport-lawyer-profile",
-      "description": "Complete a private personal lawyer profile from local work materials, with optional JuriSupport profile draft upload.",
+      "description": "Complete a private personal lawyer profile from local work materials, with optional JuriSupport profile draft upload after web consent.",
       "author": {
         "name": "JuriSupport"
       },

@@ -86,10 +86,17 @@ claude plugin validate .
 4. 프로필 문구 후보별 근거, 공개 가능성, 과장 위험, 원하는 상담 유형과의 적합성을 정리합니다.
 5. 먼저 `jurisupport-personal-profile.md`를 만듭니다.
 6. 변호사가 원하면 `jurisupport-profile-draft.json`과 `jurisupport-profile-review.md`를 추가로 만듭니다.
-7. JuriSupport MCP가 연결되어 있고 변호사가 원하면 `/jurisupport-lawyer-profile:upload-to-jurisupport`로 draft를 올립니다.
-8. JuriSupport에 올린 프로필은 유사한 질문을 한 의뢰인 상담 요청을 확인하는 데 활용될 수 있습니다.
+7. JuriSupport 웹에서 가입·로그인 후 `/lawyer-search/profile/consent` 동의 페이지를 완료합니다.
+8. JuriSupport MCP가 연결되어 있고 변호사가 원하면 `/jurisupport-lawyer-profile:upload-to-jurisupport`로 draft를 올립니다.
+9. JuriSupport에 올린 프로필은 유사한 질문을 한 의뢰인 상담 요청을 확인하는 데 활용될 수 있습니다.
 
-MCP 업로드는 draft 업로드만 합니다. 공개 승인이나 검색 노출은 별도 검토 절차를 거쳐야 합니다.
+가입과 웹 동의는 다음 URL에서 시작할 수 있습니다.
+
+```text
+https://jurisupport.com/signup?redirect=/lawyer-search/profile/consent
+```
+
+MCP 업로드는 draft 업로드만 합니다. 웹 동의가 없으면 업로드 API가 거절합니다. 공개 승인이나 검색 노출은 별도 검토 절차를 거쳐야 합니다.
 
 ## 매번 짧게 실행하고 싶을 때
 
