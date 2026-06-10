@@ -18,10 +18,17 @@ This public package intentionally does not include JuriSupport's private matchin
 
 ## Install For Local Testing
 
-From a workspace that contains this plugin folder:
+Clone this private repository:
 
 ```bash
-claude --plugin-dir ./public-release/claude-code-plugins/jurisupport-lawyer-profile
+git clone https://github.com/jurisupport/jurisupport-lawyer-profile-plugin.git
+cd jurisupport-lawyer-profile-plugin
+```
+
+Run Claude Code with this plugin directory:
+
+```bash
+claude --plugin-dir .
 ```
 
 In Claude Code:
@@ -29,6 +36,12 @@ In Claude Code:
 ```text
 /jurisupport-lawyer-profile:profile-draft-from-records
 /jurisupport-lawyer-profile:upload-via-mcp
+```
+
+If you are testing from the private planning workspace instead of a cloned repo, use:
+
+```bash
+claude --plugin-dir /Users/haheebong/Documents/jurisupport-lawyer-search-private/public-release/claude-code-plugins/jurisupport-lawyer-profile
 ```
 
 ## Data Handling
