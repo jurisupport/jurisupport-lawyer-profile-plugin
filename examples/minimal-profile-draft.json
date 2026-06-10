@@ -1,0 +1,61 @@
+{
+  "profileVersion": "0.2",
+  "sourceMode": "local_files",
+  "lawyerIdentity": {
+    "lawyerId": null,
+    "displayName": "홍길동 변호사",
+    "firmName": "주리스포트 법률사무소"
+  },
+  "sourceInventory": [
+    {
+      "sourceId": "src-001",
+      "sourceType": "written_work",
+      "status": "reviewed",
+      "pathOrReference": "local:selected-folder",
+      "summary": "변호사가 선택한 작성서류 일부를 검토함",
+      "publicUseAllowed": false
+    }
+  ],
+  "observedPractice": {
+    "practiceAreas": ["lease"],
+    "problemTypes": ["lease_deposit_return"],
+    "workPatterns": [
+      {
+        "label": "상담 전 자료 정리",
+        "description": "계약서와 입금내역을 함께 보며 상담 전 쟁점을 정리하는 패턴",
+        "sourceSupport": ["src-001"],
+        "confidence": "medium"
+      }
+    ]
+  },
+  "intendedPractice": {
+    "preferredMatters": ["임대차 보증금 반환"],
+    "excludedMatters": [],
+    "regions": ["서울"],
+    "consultationModes": ["phone", "kakaotalk"],
+    "languages": ["ko"]
+  },
+  "publicProfile": {
+    "headline": "임대차 보증금 분쟁 상담 전 자료 정리",
+    "bio": "임대차 보증금 반환 관련 자료를 검토하고 상담 전 쟁점을 정리하는 업무 경험이 확인됩니다.",
+    "problemFit": ["임대차 보증금 반환"],
+    "preConsultationMaterials": ["계약서", "입금내역", "상대방과 주고받은 대화내역"],
+    "strengthCards": [
+      {
+        "title": "상담 전 자료 구조화",
+        "publicCopy": "계약서와 입금내역을 함께 검토해 상담 전 쟁점을 정리하는 방식이 확인됩니다.",
+        "sourceBasis": ["written_work"],
+        "casePatternConsent": true,
+        "riskFlags": []
+      }
+    ]
+  },
+  "internalEvidenceMap": [],
+  "compliance": {
+    "riskFlags": ["needs_lawyer_approval"],
+    "reviewNotes": ["공개 전 JuriSupport 검토와 변호사 최종 승인이 필요합니다."],
+    "publicationVerdict": "needs_review"
+  },
+  "lawyerApprovalRequired": true,
+  "registrationReadiness": "needs_review"
+}
