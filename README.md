@@ -20,7 +20,7 @@
 Claude Code에 마켓플레이스를 한 번 등록한 뒤 플러그인을 설치합니다.
 
 ```bash
-claude plugin marketplace add jurisupport/jurisupport-lawyer-profile-plugin
+claude plugin marketplace add https://github.com/jurisupport/jurisupport-lawyer-profile-plugin.git
 claude plugin install jurisupport-lawyer-profile@jurisupport-lawyer-profile-plugin
 ```
 
