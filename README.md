@@ -17,41 +17,37 @@
 
 ## 설치
 
-원하는 위치에 플러그인을 내려받습니다.
+Claude Code에 마켓플레이스를 한 번 등록한 뒤 플러그인을 설치합니다.
 
 ```bash
-mkdir -p ~/claude-plugins
-git clone https://github.com/jurisupport/jurisupport-lawyer-profile-plugin.git \
-  ~/claude-plugins/jurisupport-lawyer-profile-plugin
-cd ~/claude-plugins/jurisupport-lawyer-profile-plugin
+claude plugin marketplace add jurisupport/jurisupport-lawyer-profile-plugin
+claude plugin install jurisupport-lawyer-profile@jurisupport-lawyer-profile-plugin
 ```
 
-플러그인 형식을 확인합니다.
+설치가 끝나면 새 Claude Code 세션부터 자동으로 사용할 수 있습니다. 이미 열린 세션에서는 Claude Code 안에서 다음 명령을 실행합니다.
+
+```text
+/reload-plugins
+```
+
+설치 상태는 터미널에서 확인할 수 있습니다.
 
 ```bash
-claude plugin validate .
+claude plugin list
 ```
 
 ## 실행
 
-플러그인 폴더에서 바로 실행하려면:
+설치가 끝나면 매번 `--plugin-dir`를 붙일 필요가 없습니다. 원하는 작업 폴더에서 Claude Code를 평소처럼 실행합니다.
 
 ```bash
-claude --plugin-dir .
-```
-
-다른 작업 폴더에서 실행하려면 플러그인 경로를 지정합니다.
-
-```bash
-claude --plugin-dir ~/claude-plugins/jurisupport-lawyer-profile-plugin
+claude
 ```
 
 사건자료 폴더를 Claude Code가 함께 읽을 수 있게 하려면 `--add-dir`을 붙입니다.
 
 ```bash
-claude \
-  --plugin-dir ~/claude-plugins/jurisupport-lawyer-profile-plugin \
-  --add-dir /path/to/case-records
+claude --add-dir /path/to/case-records
 ```
 
 Claude Code 안에서 다음 스킬을 사용합니다.
@@ -59,6 +55,18 @@ Claude Code 안에서 다음 스킬을 사용합니다.
 ```text
 /jurisupport-lawyer-profile:profile-draft-from-records
 /jurisupport-lawyer-profile:upload-via-mcp
+```
+
+## 직접 내려받아 확인하고 싶을 때
+
+레포 내용을 먼저 보고 검증하려면 원하는 위치에 내려받을 수 있습니다.
+
+```bash
+mkdir -p ~/claude-plugins
+git clone https://github.com/jurisupport/jurisupport-lawyer-profile-plugin.git \
+  ~/claude-plugins/jurisupport-lawyer-profile-plugin
+cd ~/claude-plugins/jurisupport-lawyer-profile-plugin
+claude plugin validate .
 ```
 
 ## 기본 사용 흐름
@@ -75,16 +83,16 @@ MCP 업로드는 draft 제출만 합니다. 공개 승인이나 검색 노출은
 
 ## 매번 짧게 실행하고 싶을 때
 
-셸 설정 파일에 alias를 추가할 수 있습니다.
+설치 후에는 alias에 플러그인 경로를 넣을 필요가 없습니다. 사건자료 폴더를 자주 함께 여는 경우에만 셸 설정 파일에 alias를 추가할 수 있습니다.
 
 ```bash
-alias jurisupport-profile='claude --plugin-dir ~/claude-plugins/jurisupport-lawyer-profile-plugin'
+alias jurisupport-profile='claude --add-dir /path/to/case-records'
 ```
 
 이후에는 원하는 작업 폴더에서 다음처럼 실행합니다.
 
 ```bash
-jurisupport-profile --add-dir /path/to/case-records
+jurisupport-profile
 ```
 
 ## 업데이트
@@ -92,9 +100,8 @@ jurisupport-profile --add-dir /path/to/case-records
 새 버전을 받으려면:
 
 ```bash
-cd ~/claude-plugins/jurisupport-lawyer-profile-plugin
-git pull
-claude plugin validate .
+claude plugin marketplace update jurisupport-lawyer-profile-plugin
+claude plugin update jurisupport-lawyer-profile
 ```
 
 ## 데이터 처리 원칙
