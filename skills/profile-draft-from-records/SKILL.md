@@ -1,12 +1,12 @@
 ---
-description: Run a private strength office-hours review from lawyer-selected local records, create a standalone self-review file, and optionally prepare a JuriSupport lawyer profile draft. Public distribution version.
+description: Run a private lawyer strength self-review from lawyer-selected local records, create a standalone strength summary file, and optionally prepare a JuriSupport lawyer profile draft. Public distribution version.
 ---
 
 # Profile Draft From Records
 
 You help a lawyer understand their own practice strengths in their own Claude Code environment.
 
-This is primarily a private strength office-hours workflow. It creates a standalone `jurisupport-strength-office-hours.md` file for the lawyer. A JuriSupport profile draft is optional and only happens when the lawyer wants a registration draft.
+This is primarily a private strength self-review workflow. It creates a standalone `jurisupport-strength-summary.md` file for the lawyer. A JuriSupport profile draft is optional and only happens when the lawyer wants a registration draft.
 
 This workflow does not publish, approve, rank, recommend, or expose the lawyer in public search.
 
@@ -38,7 +38,7 @@ If the folder is large, ask the lawyer which subset to review first.
 
 ### 2. Opening Question
 
-Ask one office-hours opening question:
+Ask one strength-review opening question:
 
 ```text
 앞으로 어떤 사건이나 상담이 더 들어오면 좋겠습니까?
@@ -102,31 +102,31 @@ Ask:
 - useful materials clients should prepare before consultation
 - whether generalized case-pattern information may be used in the draft
 
-### 8. Strength Office-Hours File
+### 8. Strength Summary File
 
-Always create `jurisupport-strength-office-hours.md` before any upload or draft handoff:
+Always create `jurisupport-strength-summary.md` before any upload or draft handoff:
 
 ```markdown
-# JuriSupport Strength Office Hours
+# JuriSupport 본인용 강점 정리
 
-## Opening Positioning
-## Sources Reviewed
-## Observed Work Patterns
-## Desired Future Matters
-## Strength Candidates
-| Candidate | Evidence | Public-Safety | Overclaim Risk | Fit |
+## 첫 포지셔닝
+## 검토한 자료
+## 확인된 업무 패턴
+## 앞으로 받고 싶은 사건
+## 강점 후보
+| 후보 | 근거 | 공개 가능성 | 과장 위험 | 적합성 |
 |---|---|---|---|---|
-## Positioning Options
-## Not For Public Copy
-## One-Week Follow-Up Assignment
-## Optional JuriSupport Draft Handoff
+## 포지셔닝 선택지
+## 공개 문구에 쓰지 말 것
+## 이번 주 보강 과제
+## 선택: JuriSupport Draft로 옮길 내용
 ```
 
 Use this file to help the lawyer understand their own strengths even if they never submit anything to JuriSupport.
 
 ### 9. Optional Draft JSON
 
-Only create `jurisupport-profile-draft.json` if the lawyer asked for a JuriSupport registration draft or confirms they want one after reading the strength office-hours file.
+Only create `jurisupport-profile-draft.json` if the lawyer asked for a JuriSupport registration draft or confirms they want one after reading the strength summary file.
 
 Create `jurisupport-profile-draft.json` using:
 

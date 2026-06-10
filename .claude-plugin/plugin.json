@@ -1,6 +1,6 @@
 {
   "name": "jurisupport-lawyer-profile",
-  "description": "Claude Code workflow for private lawyer strength office-hours review from lawyer-selected local work materials, with optional JuriSupport profile draft JSON submission through a draft-only MCP tool.",
+  "description": "Claude Code workflow for a private lawyer strength self-review from lawyer-selected local work materials, with optional JuriSupport profile draft JSON submission through a draft-only MCP tool.",
   "version": "0.1.0",
   "author": {
     "name": "JuriSupport"

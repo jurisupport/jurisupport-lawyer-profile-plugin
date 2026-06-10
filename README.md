@@ -2,7 +2,7 @@
 
 변호사가 자신의 업무 자료를 바탕으로 본인의 강점과 상담 적합 분야를 정리하고, 원할 때 JuriSupport 프로필 등록 초안까지 만들 수 있는 Claude Code 플러그인입니다.
 
-변호사가 자신의 로컬 Claude Code 환경에서 전자소송 기록, 판결문, 작성서류, 사건 진행 메모 등을 선택해 검토하고, 먼저 본인용 강점 office-hours 리포트를 만듭니다. JuriSupport에 제출할 수 있는 프로필 draft JSON은 변호사가 원할 때만 추가로 만듭니다.
+변호사가 자신의 로컬 Claude Code 환경에서 전자소송 기록, 판결문, 작성서류, 사건 진행 메모 등을 선택해 검토하고, 먼저 본인용 강점 정리 파일을 만듭니다. JuriSupport에 제출할 수 있는 프로필 draft JSON은 변호사가 원할 때만 추가로 만듭니다.
 
 이 플러그인은 프로필을 공개하지 않습니다. 변호사를 추천, 알선, 순위화, 광고, 스폰서 노출하지도 않습니다. 원본 사건기록 파일을 자동 업로드하지 않고, 변호사가 확인한 draft JSON만 선택적으로 제출합니다. JuriSupport 제출 없이 본인용 강점 리포트만 만들 수도 있습니다.
 
@@ -65,9 +65,9 @@ Claude Code 안에서 다음 스킬을 사용합니다.
 
 1. `/jurisupport-lawyer-profile:profile-draft-from-records`를 실행합니다.
 2. 사건 폴더, 판결문 파일, 작성서류 폴더, 또는 직접 요약한 내용을 알려줍니다.
-3. Claude Code가 office-hours 방식으로 "앞으로 어떤 사건이 더 들어오면 좋은지"부터 묻고, 자료에서 확인되는 업무 패턴과 대조합니다.
+3. Claude Code가 짧은 강점 점검 인터뷰로 "앞으로 어떤 사건이 더 들어오면 좋은지"부터 묻고, 자료에서 확인되는 업무 패턴과 대조합니다.
 4. 강점 후보별 근거, 공개 가능성, 과장 위험, 원하는 상담 유형과의 적합성을 정리합니다.
-5. 먼저 `jurisupport-strength-office-hours.md`를 만듭니다.
+5. 먼저 `jurisupport-strength-summary.md`를 만듭니다.
 6. 변호사가 원하면 `jurisupport-profile-draft.json`과 `jurisupport-profile-review.md`를 추가로 만듭니다.
 7. JuriSupport MCP가 연결되어 있고 변호사가 원하면 `/jurisupport-lawyer-profile:upload-via-mcp`로 draft를 제출합니다.
 
@@ -109,7 +109,7 @@ claude plugin validate .
 
 항상 만드는 산출물:
 
-- `jurisupport-strength-office-hours.md`
+- `jurisupport-strength-summary.md`
 
 선택적으로 만드는 산출물:
 
