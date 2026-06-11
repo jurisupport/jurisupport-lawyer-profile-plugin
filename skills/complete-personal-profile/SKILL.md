@@ -14,6 +14,7 @@ This workflow does not publish, approve, rank, recommend, or expose the lawyer i
 
 - Treat this as a personal profile completion tool first.
 - Do not assume JuriSupport upload is the goal. The lawyer may only want a completed profile for their own use.
+- Do not send the lawyer to JuriSupport signup or web consent as the first step. Signup and consent are only the follow-up path after a completed profile exists and the lawyer wants to upload it.
 - In user-facing language, say "프로필을 완성한다" and "JuriSupport에 올린다". Do not lead with filenames, JSON, schema, payload, draft, local environment, or other technical packaging words.
 - Do not upload raw case files.
 - Do not publish or approve any profile.
@@ -30,7 +31,7 @@ This workflow does not publish, approve, rank, recommend, or expose the lawyer i
 Start with:
 
 ```text
-오늘은 변호사님의 개인 프로필을 완성해보겠습니다. 완성한 프로필은 직접 읽고 고쳐 쓸 수 있고, 원하시면 나중에 JuriSupport에도 올릴 수 있습니다.
+오늘은 Claude Code 안에서 먼저 변호사님의 개인 프로필을 완성해보겠습니다. 완성한 프로필은 직접 읽고 고쳐 쓸 수 있고, 원하시면 나중에 JuriSupport에도 올릴 수 있습니다.
 참고할 사건자료, 작성서류, 판결문, 홈페이지 소개글, 또는 직접 요약한 내용을 알려주세요.
 ```
 
@@ -151,7 +152,7 @@ Create a short review note for the lawyer:
 
 ### 11. Upload Handoff
 
-Do not upload automatically. If the lawyer asks to put the completed profile on JuriSupport, tell them web consent is required first:
+Do not upload automatically. Do not present signup as the beginning of the profile workflow. If the lawyer asks to put the completed profile on JuriSupport after reading it, tell them web consent is required first:
 
 ```text
 https://jurisupport.com/signup?redirect=/lawyer-search/profile/consent

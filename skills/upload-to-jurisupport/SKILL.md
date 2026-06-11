@@ -8,9 +8,11 @@ Put a completed personal profile on JuriSupport only when the lawyer explicitly 
 
 This workflow receives the completed profile prepared by `/jurisupport-lawyer-profile:complete-personal-profile`. It never publishes a profile and never approves public exposure by itself.
 
+This is not the beginning of the lawyer onboarding process. If the lawyer has not completed a personal profile yet, route them back to `/jurisupport-lawyer-profile:complete-personal-profile` before discussing signup, consent, or upload.
+
 Web consent is mandatory. Do not treat chat confirmation as upload consent. In user-facing language, say "완성한 프로필을 JuriSupport에 올린다". Do not lead with filenames, JSON, payload, package, draft, schema, or other technical packaging words unless troubleshooting requires it.
 
-The lawyer must complete the JuriSupport web consent page first:
+After the profile is complete and the lawyer wants to upload it, the lawyer must complete the JuriSupport web consent page:
 
 ```text
 https://jurisupport.com/signup?redirect=/lawyer-search/profile/consent
