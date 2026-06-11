@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://jurisupport.com/schemas/lawyer-profile-draft.public.schema.json",
-  "title": "JuriSupport Lawyer Personal Profile Draft",
-  "description": "Draft JSON created from a lawyer's private personal profile when the lawyer wants to upload it to JuriSupport.",
+  "title": "JuriSupport Lawyer Personal Profile Upload Data",
+  "description": "Structured profile data created from a lawyer's completed personal profile when the lawyer wants to upload it to JuriSupport.",
   "type": "object",
   "additionalProperties": true,
   "required": [
