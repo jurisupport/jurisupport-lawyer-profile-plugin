@@ -23,6 +23,8 @@ This workflow does not publish, approve, rank, recommend, or expose the lawyer i
 - Do not put case numbers, party names, opposing party names, addresses, unique facts, private messages, or strategy details into public fields.
 - Treat all local materials as confidential.
 - Ask one short question at a time.
+- You may ask which matters the lawyer does not prefer, but only after saying the answer is for internal JuriSupport soft ranking controls. It may push those matters toward later result pages when alternatives exist, but it is not customer-facing profile text and should not remove the lawyer from results by itself.
+- Do not build a fixed pre-consultation materials checklist. Materials are case-by-case and should not be presented as pre-investigated requirements.
 
 ## Workflow
 
@@ -57,7 +59,7 @@ From the selected materials, summarize only safe, generalized patterns:
 - problem type
 - procedural stage
 - written work type
-- consultation preparation materials
+- case-by-case intake or consultation-mode patterns
 - repeated organization or document-review patterns
 
 Do not copy identifiers or detailed facts.
@@ -99,10 +101,10 @@ For each option, give tradeoffs and what evidence would make it stronger.
 Ask:
 
 - which kinds of client questions or matters the lawyer wants the profile to attract
-- which kinds of matters the lawyer does not want
+- which kinds of matters the lawyer does not prefer, stored only as internal soft ranking controls
 - regions
 - consultation modes, including phone, online, text, KakaoTalk, or other messenger
-- useful materials clients should prepare before consultation
+- case-by-case intake notes only if the lawyer has already raised them, and only for internal matching
 - whether generalized case-pattern information may be used if the lawyer later uploads the profile to JuriSupport
 
 ### 8. Completed Personal Profile
@@ -120,7 +122,7 @@ Always create the completed personal profile before any JuriSupport upload hando
 | 문구 후보 | 근거 | 공개 가능성 | 과장 위험 | 적합성 |
 |---|---|---|---|---|
 ## 포지셔닝 선택지
-## 상담 전 받아두면 좋은 자료
+## JuriSupport 내부 매칭 조건
 ## 프로필에 쓰지 말 것
 ## 이번 주 보강 과제
 ## 선택: JuriSupport에 올릴 수 있는 내용
@@ -145,7 +147,7 @@ Create a short review note for the lawyer:
 ## 확인된 업무 패턴
 ## 원하는 상담 방향과의 적합성
 ## 프로필 문구
-## 상담 전 의뢰인에게 받으면 좋은 자료
+## JuriSupport 내부 매칭 조건
 ## 개인정보 보호를 위해 제외한 내용
 ## JuriSupport에 올리기 전 확인할 내용
 ```

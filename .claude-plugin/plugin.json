@@ -1,7 +1,7 @@
 {
   "name": "jurisupport-lawyer-profile",
   "description": "변호사가 Claude Code 강점찾기 플러그인에서 먼저 직접 읽고 활용할 수 있는 개인 프로필을 완성하고, 원하면 웹 동의 후 JuriSupport에 올릴 수 있게 돕습니다.",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "author": {
     "name": "JuriSupport"
   }

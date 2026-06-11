@@ -11,6 +11,7 @@
     "lawyerIdentity",
     "observedPractice",
     "intendedPractice",
+    "internalMatchingControls",
     "publicProfile",
     "compliance",
     "lawyerApprovalRequired",
@@ -19,7 +20,7 @@
   "properties": {
     "profileVersion": {
       "type": "string",
-      "const": "0.2"
+      "const": "0.5"
     },
     "sourceMode": {
       "type": "string",
@@ -49,11 +50,28 @@
     },
     "intendedPractice": {
       "type": "object",
-      "required": ["preferredMatters", "excludedMatters", "regions", "consultationModes", "languages"]
+      "required": ["preferredMatters", "regions", "consultationModes", "languages"]
+    },
+    "internalMatchingControls": {
+      "type": "object",
+      "description": "Server-side soft ranking controls only. These values may reduce result priority but must not be shown as public profile text, customer-facing APIs, match explanations, or profile copy.",
+      "required": ["visibility", "lessPreferredMatters", "rankingNotes"],
+      "properties": {
+        "visibility": {
+          "type": "string",
+          "const": "internal_soft_ranking_only"
+        },
+        "lessPreferredMatters": {
+          "type": "array"
+        },
+        "rankingNotes": {
+          "type": "array"
+        }
+      }
     },
     "publicProfile": {
       "type": "object",
-      "required": ["headline", "bio", "problemFit", "preConsultationMaterials", "strengthCards"]
+      "required": ["headline", "bio", "problemFit", "strengthCards"]
     },
     "internalEvidenceMap": {
       "type": "array"
