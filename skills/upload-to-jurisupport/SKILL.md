@@ -12,6 +12,12 @@ This is not the beginning of the lawyer onboarding process. If the lawyer has no
 
 Web consent is mandatory. Do not treat chat confirmation as upload consent. In user-facing language, say "완성한 프로필을 JuriSupport에 올린다". Do not lead with filenames, JSON, payload, package, draft, schema, or other technical packaging words unless troubleshooting requires it.
 
+Before checking upload gates, tell the lawyer that upload requires the `jurisupport` MCP connection in Claude Code. If it is missing, stop before upload and show:
+
+```bash
+claude mcp add --transport http jurisupport https://api.jurisupport.com/mcp --header "Authorization: Bearer <MCP_TOKEN>"
+```
+
 After the profile is complete and the lawyer wants to upload it, the lawyer must complete the JuriSupport web consent page:
 
 ```text
@@ -25,7 +31,7 @@ Proceed only if:
 1. A completed profile exists or the lawyer pasted the completed profile content.
 2. The lawyer has completed the web consent page at `/lawyer-search/profile/consent`.
 3. The lawyer confirms the completed profile may be uploaded to JuriSupport.
-4. The environment has the JuriSupport MCP tool `upload_lawyer_search_profile_draft`, or the lawyer wants a reviewer handoff note.
+4. The environment has the JuriSupport MCP tool `upload_lawyer_search_profile_draft`.
 
 If any gate is missing, explain what is missing and stop before upload.
 
@@ -42,7 +48,7 @@ If `upload_lawyer_search_profile_draft` is available:
 
 ## Manual Package
 
-If MCP is unavailable, prepare a concise reviewer handoff note in plain Korean with:
+If MCP is unavailable, do not upload. Show the MCP install command first, then prepare a concise reviewer handoff note in plain Korean only if the lawyer explicitly asks for a non-MCP handoff artifact:
 
 - the completed profile text
 - the consultation areas and desired client questions

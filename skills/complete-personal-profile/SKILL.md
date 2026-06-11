@@ -14,6 +14,8 @@ This workflow does not publish, approve, rank, recommend, or expose the lawyer i
 
 - Treat this as a personal profile completion tool first.
 - Do not assume JuriSupport upload is the goal. The lawyer may only want a completed profile for their own use.
+- Before reading materials, tell the lawyer that JuriSupport-backed strength finding and upload require the `jurisupport` MCP connection in Claude Code.
+- If the user asks to use JuriSupport matter history or upload to JuriSupport and the MCP tool is unavailable, stop and give MCP installation instructions before continuing that JuriSupport-backed flow.
 - Do not send the lawyer to JuriSupport signup or web consent as the first step. Signup and consent are only the follow-up path after a completed profile exists and the lawyer wants to upload it.
 - In user-facing language, say "프로필을 완성한다" and "JuriSupport에 올린다". Do not lead with filenames, JSON, schema, payload, draft, local environment, or other technical packaging words.
 - Do not upload raw case files.
@@ -30,7 +32,19 @@ This workflow does not publish, approve, rank, recommend, or expose the lawyer i
 
 ### 1. Ask For Goal And Source Route
 
-Start with:
+Start by warning about the MCP dependency:
+
+```text
+JuriSupport 사건진행내역을 참고하거나 완성한 프로필을 JuriSupport에 올리려면 먼저 JuriSupport MCP 연결이 필요합니다. MCP가 연결되어 있지 않으면 JuriSupport 웹에서 토큰을 발급한 뒤 Claude Code에 `jurisupport` MCP 서버를 등록해야 합니다.
+```
+
+If the MCP is missing and the user wants JuriSupport-backed strength finding, show:
+
+```bash
+claude mcp add --transport http jurisupport https://api.jurisupport.com/mcp --header "Authorization: Bearer <MCP_TOKEN>"
+```
+
+Then continue with:
 
 ```text
 오늘은 Claude Code 안에서 먼저 변호사님의 개인 프로필을 완성해보겠습니다. 완성한 프로필은 직접 읽고 고쳐 쓸 수 있고, 원하시면 나중에 JuriSupport에도 올릴 수 있습니다.
