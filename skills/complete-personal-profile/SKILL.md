@@ -62,6 +62,15 @@ Then continue with:
 ```text
 오늘은 Claude Code 안에서 먼저 변호사님의 개인 프로필을 완성해보겠습니다. 완성한 프로필은 직접 읽고 고쳐 쓸 수 있고, 원하시면 나중에 JuriSupport에도 올릴 수 있습니다.
 참고할 사건자료, 작성서류, 판결문, 홈페이지 소개글, 또는 직접 요약한 내용을 알려주세요.
+
+자료 폴더가 있으면 폴더의 전체 경로를 붙여넣어 주세요.
+- macOS Finder: 폴더를 선택한 뒤 `Command + Option + C`를 누르면 전체 경로가 복사됩니다.
+- Windows 탐색기: 폴더를 연 뒤 주소창을 클릭하거나 `Alt + D`를 누르고, `Ctrl + C`로 복사합니다.
+- 터미널: 해당 폴더로 이동한 뒤 `pwd`를 실행해 나온 경로를 복사합니다.
+- Claude Code를 터미널에서 쓰는 중이면 폴더를 터미널 창으로 드래그해도 경로가 들어갈 수 있습니다.
+
+예: `/Users/name/Documents/case-records`
+여러 폴더가 있으면 한 줄에 하나씩 붙여넣어 주세요.
 ```
 
 If the lawyer gives a folder, inspect the file list first and summarize what appears to be available before reading deeply.
