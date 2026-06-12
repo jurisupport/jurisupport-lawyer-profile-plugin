@@ -14,7 +14,7 @@ This workflow does not publish, approve, rank, recommend, or expose the lawyer i
 
 - Treat this as a personal profile completion tool first.
 - Do not assume JuriSupport upload is the goal. The lawyer may only want a completed profile for their own use.
-- Before reading materials, tell the lawyer that JuriSupport-backed strength finding and upload require the `jurisupport` MCP connection in Claude Code.
+- Before reading materials, ask one setup question that confirms whether the lawyer has the `jurisupport` MCP connected and whether they want JuriSupport matter history included now.
 - If the user asks to use JuriSupport matter history or upload to JuriSupport and the MCP tool is unavailable, stop and give MCP installation instructions before continuing that JuriSupport-backed flow.
 - Do not send the lawyer to JuriSupport signup or web consent as the first step. Signup and consent are only the follow-up path after a completed profile exists and the lawyer wants to upload it.
 - In user-facing language, say "프로필을 완성한다" and "JuriSupport에 올린다". Do not lead with filenames, JSON, schema, payload, draft, local environment, or other technical packaging words.
@@ -35,17 +35,27 @@ This workflow does not publish, approve, rank, recommend, or expose the lawyer i
 
 ### 1. Ask For Goal And Source Route
 
-Start by warning about the MCP dependency:
+Start by asking one setup question and wait for the answer:
 
 ```text
-JuriSupport 사건진행내역을 참고하거나 완성한 프로필을 JuriSupport에 올리려면 먼저 JuriSupport MCP 연결이 필요합니다. MCP가 연결되어 있지 않으면 JuriSupport 웹에서 토큰을 발급한 뒤 Claude Code에 `jurisupport` MCP 서버를 등록해야 합니다.
+프로필을 어떤 방식으로 완성할까요?
+
+1. JuriSupport MCP가 연결되어 있어 사건진행내역까지 참고한다.
+2. 아직 MCP가 없으니 로컬 자료나 직접 설명만으로 먼저 완성한다.
+3. MCP를 먼저 연결하고 나서 시작한다.
 ```
 
-If the MCP is missing and the user wants JuriSupport-backed strength finding, show:
+If the lawyer chooses option 1, check whether the `jurisupport` MCP tool is available before reading JuriSupport matter history. If the tool is unavailable, show:
 
 ```bash
 claude mcp add --transport http jurisupport https://api.jurisupport.com/mcp --header "Authorization: Bearer <MCP_TOKEN>"
 ```
+
+Then ask whether to continue with local-only profile completion for now or stop until MCP is connected.
+
+If the lawyer chooses option 2, proceed with local files or manual explanation only. Mark JuriSupport matter history as unavailable in the source inventory and add an `mcp_unavailable` gap only if the lawyer wants JuriSupport-backed analysis or upload readiness later.
+
+If the lawyer chooses option 3, show the MCP install command and stop before reading materials or starting profile work.
 
 Then continue with:
 

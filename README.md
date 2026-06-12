@@ -111,7 +111,7 @@ claude plugin validate .
 ## 기본 사용 흐름
 
 1. `/jurisupport-lawyer-profile:complete-personal-profile`을 실행합니다.
-2. 플러그인이 JuriSupport MCP 연결 필요성을 먼저 안내합니다.
+2. 플러그인이 먼저 JuriSupport MCP 연결 여부를 묻고, 사건진행내역까지 참고할지 로컬 자료만으로 진행할지 확인합니다.
 3. 참고할 사건자료, 작성서류, 판결문, 홈페이지 소개글, 또는 직접 정리한 내용을 알려줍니다.
 4. Claude Code가 "앞으로 어떤 질문을 한 의뢰인을 만나고 싶은지"부터 짧게 묻습니다.
 5. 자료에서 확인되는 업무 패턴과 원하는 상담 방향을 대조합니다.
