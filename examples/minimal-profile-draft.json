@@ -54,6 +54,24 @@
     ]
   },
   "internalEvidenceMap": [],
+  "profileGapAnalysis": {
+    "summary": "공개 초안에 사건 식별정보는 없지만, JuriSupport에 올리기 전 변호사 최종 확인이 남아 있습니다.",
+    "gaps": [
+      {
+        "gapId": "gap-001",
+        "gapType": "missing_lawyer_consent",
+        "severity": "high",
+        "relatedClaimIds": [],
+        "relatedSourceIds": ["src-001"],
+        "description": "공개 프로필 문구에 대한 변호사 최종 승인이 아직 기록되지 않았습니다.",
+        "whyItMatters": "승인 전에는 JuriSupport 업로드 준비 완료로 표시하지 않습니다.",
+        "recommendedAction": "변호사가 문구와 공개 범위를 확인한 뒤 승인 여부를 기록합니다.",
+        "blocksDraftUpload": true
+      }
+    ],
+    "blockingGapCount": 1,
+    "lastReviewedAt": null
+  },
   "compliance": {
     "riskFlags": ["needs_lawyer_approval"],
     "reviewNotes": ["JuriSupport에 올리기 전 변호사 최종 확인과 JuriSupport 검토가 필요합니다."],

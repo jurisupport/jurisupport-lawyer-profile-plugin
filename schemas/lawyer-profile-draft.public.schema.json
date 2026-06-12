@@ -13,6 +13,7 @@
     "intendedPractice",
     "internalMatchingControls",
     "publicProfile",
+    "profileGapAnalysis",
     "compliance",
     "lawyerApprovalRequired",
     "registrationReadiness"
@@ -75,6 +76,26 @@
     },
     "internalEvidenceMap": {
       "type": "array"
+    },
+    "profileGapAnalysis": {
+      "type": "object",
+      "description": "Known evidence, consent, privacy, wording, and source gaps that must be visible before JuriSupport draft upload.",
+      "required": ["summary", "gaps", "blockingGapCount", "lastReviewedAt"],
+      "properties": {
+        "summary": {
+          "type": "string"
+        },
+        "gaps": {
+          "type": "array"
+        },
+        "blockingGapCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "lastReviewedAt": {
+          "type": ["string", "null"]
+        }
+      }
     },
     "compliance": {
       "type": "object",

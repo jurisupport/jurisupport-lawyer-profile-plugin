@@ -24,6 +24,9 @@ This workflow does not publish, approve, rank, recommend, or expose the lawyer i
 - Do not use "best", "top", "expert", "specialist", "guaranteed", "win rate", or equivalent superiority claims.
 - Do not put case numbers, party names, opposing party names, addresses, unique facts, private messages, or strategy details into public fields.
 - Treat all local materials as confidential.
+- Keep an explicit gap analysis for missing sources, thin evidence, stale materials, contradictions, missing lawyer consent, privacy redaction needs, public wording risk, observed/intended mismatch, and MCP unavailability. Do not hide uncertainty in polished profile prose.
+- Apply a profile signal check before treating a strength as upload-ready: repeated work pattern, visible lawyer role, recent support, publicly usable basis, no identifiers, fit with intended practice, low advertising risk, evidence-backed lawyer correction, internal/public separation, and a clear next evidence action.
+- Flag profile anti-patterns immediately: "all matters welcome", specialist/best/top/win-rate wording, famous case or high amount as proof, outcome-centered profile, less-preferred matters in public copy, self-declaration as verified strength, one case framed as a repeated strength, and pending matter details as proof.
 - Ask one short question at a time.
 - You may ask which matters the lawyer does not prefer, but only after saying the answer is for internal JuriSupport soft ranking controls. It may push those matters toward later result pages when alternatives exist, but it is not customer-facing profile text and should not remove the lawyer from results by itself.
 - Do not build a fixed pre-consultation materials checklist. Materials are case-by-case and should not be presented as pre-investigated requirements.
@@ -97,6 +100,9 @@ Create 2-5 candidate strengths and challenge each:
 - public-safety: safe / needs redaction / private only
 - overclaim risk: low / medium / high
 - fit with desired future matters: aligned / partial / mismatch
+- profile signal score: strong / mixed / weak
+- anti-pattern flags
+- response quality: evidence-backed correction / unsupported agreement / deflection / scope narrowing / consent missing / source unavailable
 
 If observed work and desired future work differ, show the difference clearly.
 
@@ -135,9 +141,13 @@ Always create the completed personal profile before any JuriSupport upload hando
 ## 프로필 문구 후보
 | 문구 후보 | 근거 | 공개 가능성 | 과장 위험 | 적합성 |
 |---|---|---|---|---|
+## 프로필 신호 점검
+## 프로필 함정
+## 응답 품질 신호
 ## 포지셔닝 선택지
 ## JuriSupport 내부 매칭 조건
 ## 프로필에 쓰지 말 것
+## 부족한 근거와 확인할 사항
 ## 이번 주 보강 과제
 ## 선택: JuriSupport에 올릴 수 있는 내용
 ```
@@ -149,6 +159,10 @@ Use this as the lawyer's working profile even if they never upload anything to J
 Only prepare JuriSupport upload data if the lawyer asks to put the completed profile on JuriSupport or confirms they want to do so after reading the completed profile.
 
 For internal upload preparation, use the public schema in `schemas/lawyer-profile-draft.public.schema.json`. Keep the lawyer-facing explanation simple: "JuriSupport에 올릴 수 있도록 프로필 내용을 정리했습니다." Do not explain the technical shape unless the lawyer explicitly asks.
+
+The upload data must include `profileGapAnalysis`. If `blockingGapCount` is greater than 0, keep `registrationReadiness` as `needs_review` or `not_ready`.
+
+Any weekly evidence assignment should be completable within 7 days, measurable, and should increase public usable evidence rather than merely making the wording more attractive.
 
 ### 10. Profile Review Note
 

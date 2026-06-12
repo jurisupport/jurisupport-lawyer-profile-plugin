@@ -1,0 +1,5 @@
+{"utterance":"제 작성서류를 참고해서 변호사 개인 프로필을 완성해줘","expectedSkill":"complete-personal-profile","rationale":"The public workflow completes a personal profile from selected work materials."}
+{"utterance":"JuriSupport에 올릴지는 나중에 정하고 우선 프로필부터 만들고 싶어","expectedSkill":"complete-personal-profile","rationale":"The user wants profile completion before any upload path."}
+{"utterance":"앞으로 받고 싶은 상담 유형을 기준으로 소개문을 정리해줘","expectedSkill":"complete-personal-profile","rationale":"The workflow captures intended consultation fit and restrained copy."}
+{"utterance":"자료상 확인되는 업무 패턴과 부족한 근거를 같이 정리해줘","expectedSkill":"complete-personal-profile","rationale":"The workflow must include observed patterns and profileGapAnalysis."}
+{"utterance":"사건 식별정보 없이 공개 가능한 프로필 문구 후보를 만들어줘","expectedSkill":"complete-personal-profile","rationale":"Safe public wording candidates are part of profile completion."}

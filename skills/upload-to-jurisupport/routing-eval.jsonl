@@ -1,0 +1,5 @@
+{"utterance":"완성한 프로필을 JuriSupport에 올리고 싶어","expectedSkill":"upload-to-jurisupport","rationale":"The user explicitly asks to upload a completed profile."}
+{"utterance":"웹 동의 완료했으니 JuriSupport 검토 대기로 제출해줘","expectedSkill":"upload-to-jurisupport","rationale":"The request includes web consent and draft review submission."}
+{"utterance":"MCP 연결돼 있어. upload_lawyer_search_profile_draft로 보내줘","expectedSkill":"upload-to-jurisupport","rationale":"The user names the upload tool and MCP path."}
+{"utterance":"프로필을 공개하지 말고 draft 상태로만 제출해줘","expectedSkill":"upload-to-jurisupport","rationale":"Draft-only submission belongs to the upload workflow."}
+{"utterance":"JuriSupport에 올리기 전에 필요한 업로드 게이트를 확인해줘","expectedSkill":"upload-to-jurisupport","rationale":"Gate checking for upload is handled by the upload workflow."}

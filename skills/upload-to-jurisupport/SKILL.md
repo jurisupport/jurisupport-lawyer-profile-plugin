@@ -31,7 +31,8 @@ Proceed only if:
 1. A completed profile exists or the lawyer pasted the completed profile content.
 2. The lawyer has completed the web consent page at `/lawyer-search/profile/consent`.
 3. The lawyer confirms the completed profile may be uploaded to JuriSupport.
-4. The environment has the JuriSupport MCP tool `upload_lawyer_search_profile_draft`.
+4. Upload data includes `profileGapAnalysis` and `blockingGapCount` is 0. If the field is missing or blocking gaps remain, route back to profile review instead of uploading.
+5. The environment has the JuriSupport MCP tool `upload_lawyer_search_profile_draft`.
 
 If any gate is missing, explain what is missing and stop before upload.
 
@@ -41,10 +42,11 @@ If `upload_lawyer_search_profile_draft` is available:
 
 1. Read the completed profile and the internal upload data if present.
 2. Confirm it contains `lawyerApprovalRequired: true`.
-3. Confirm it does not include raw case files or identifiers in public fields.
-4. Call `upload_lawyer_search_profile_draft` with the prepared profile data.
-5. If the tool returns `PROFILE_UPLOAD_CONSENT_REQUIRED`, stop and tell the lawyer to complete the web consent page. Do not retry until consent is recorded.
-6. Report that the profile was received by JuriSupport and is waiting for review. Do not emphasize technical IDs unless the lawyer asks.
+3. Confirm `profileGapAnalysis.blockingGapCount` is 0.
+4. Confirm it does not include raw case files or identifiers in public fields.
+5. Call `upload_lawyer_search_profile_draft` with the prepared profile data.
+6. If the tool returns `PROFILE_UPLOAD_CONSENT_REQUIRED`, stop and tell the lawyer to complete the web consent page. Do not retry until consent is recorded.
+7. Report that the profile was received by JuriSupport and is waiting for review. Do not emphasize technical IDs unless the lawyer asks.
 
 ## Manual Package
 
