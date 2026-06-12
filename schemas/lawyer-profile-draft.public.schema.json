@@ -70,6 +70,41 @@
         }
       }
     },
+    "profileStrategyAnalysis": {
+      "type": "object",
+      "description": "Internal strategy analysis comparing current positioning, actual strengths, marketing fit, and operating fit. This is not customer-facing profile copy.",
+      "properties": {
+        "summary": {
+          "type": "string"
+        },
+        "researchBasis": {
+          "type": "array",
+          "description": "Management or marketing research lenses used in the strategy audit, with lawyer-specific translation and limits."
+        },
+        "currentPosition": {
+          "type": "object"
+        },
+        "comparativeFit": {
+          "type": "object"
+        },
+        "swot": {
+          "type": "object"
+        },
+        "marketingLens": {
+          "type": "object"
+        },
+        "organizationLens": {
+          "type": "object"
+        },
+        "recommendedMoves": {
+          "type": "array"
+        },
+        "doNotUsePublicly": {
+          "type": "boolean",
+          "const": true
+        }
+      }
+    },
     "publicProfile": {
       "type": "object",
       "required": ["headline", "bio", "problemFit", "strengthCards"]

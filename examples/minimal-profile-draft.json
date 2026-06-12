@@ -39,6 +39,80 @@
     "lessPreferredMatters": [],
     "rankingNotes": ["선호하지 않는 사건 유형은 제외하지 않고 후순위 노출 신호로만 사용"]
   },
+  "profileStrategyAnalysis": {
+    "summary": "현재 프로필은 임대차 보증금 반환을 말하지만, 실제 차별점은 초기 상담에서 자료와 쟁점을 정리하는 방식에 있습니다.",
+    "researchBasis": [
+      {
+        "lens": "market_orientation",
+        "citation": "Kohli & Jaworski (1990), Journal of Marketing; Narver & Slater (1990), Journal of Marketing",
+        "application": "프로필을 의뢰인의 문제 상황과 상담 선택 순간에 맞춰 점검합니다.",
+        "lawyerSpecificEvidence": ["임대차 보증금 반환", "전화·카카오톡 상담"],
+        "limit": "성과 데이터가 없으므로 의뢰인 반응 개선을 단정하지 않습니다."
+      },
+      {
+        "lens": "resource_based_view",
+        "citation": "Barney (1991), Journal of Management",
+        "application": "강점을 넓은 분야명이 아니라 자료상 확인되는 반복 업무 방식으로 좁힙니다.",
+        "lawyerSpecificEvidence": ["사건별 자료와 설명을 함께 보며 초기 쟁점을 정리하는 패턴"],
+        "limit": "현재 샘플은 작성서류 일부만 보았으므로 반복성 근거가 얇습니다."
+      }
+    ],
+    "currentPosition": {
+      "profileSignal": "임대차 보증금 분쟁의 초기 상담을 다루는 프로필",
+      "visibleStrengths": ["초기 상담 쟁점 정리"],
+      "weaknesses": ["자료 정리 방식과 상담 전 의사결정 지원이 충분히 드러나지 않음"],
+      "positioningRisks": ["일반 임대차 프로필로 보일 수 있음"]
+    },
+    "comparativeFit": {
+      "lawyerStatedStrengths": ["초기 상담에서 쟁점을 정리하는 일"],
+      "observedStrengths": ["사건별 자료와 설명을 함께 보며 초기 쟁점을 정리하는 패턴"],
+      "underusedStrengths": ["상담 전 자료 정리 안내"],
+      "overclaimedAreas": [],
+      "observedIntendedMismatches": []
+    },
+    "swot": {
+      "strengths": ["작성서류 일부에서 초기 쟁점 정리 패턴이 확인됨"],
+      "weaknesses": ["반복성 근거가 아직 얇음"],
+      "opportunities": ["보증금 반환 상담 전 확인 사항을 콘텐츠와 프로필 신호로 만들 수 있음"],
+      "threats": ["성과나 빠른 해결 중심 표현으로 흐르면 광고 위험이 생길 수 있음"]
+    },
+    "marketingLens": {
+      "targetSegments": ["임대차 보증금 반환 상담을 준비하는 의뢰인"],
+      "positioningStatement": "보증금 반환 상담 전 자료와 쟁점을 정리해주는 변호사",
+      "differentiators": ["초기 상담 전에 자료와 설명을 함께 정리"],
+      "proofSignals": ["선택한 작성서류 일부"],
+      "messageChannelFit": ["JuriSupport 프로필", "홈페이지 FAQ"],
+      "clientJourneyNotes": ["상담 전에 무엇을 정리해야 하는지 알려주는 역할"],
+      "objectionsToAddress": ["자료가 부족해도 상담을 시작할 수 있는지"],
+      "contentAssetsToCreate": ["보증금 반환 상담 전 확인할 내용 FAQ"]
+    },
+    "organizationLens": {
+      "intakeProcessNotes": ["자료 목록을 고정하지 않고 사건별로 필요한 자료를 확인"],
+      "serviceCapacityConstraints": ["자료가 많은 사건은 우선 쟁점 정리 상담으로 범위를 좁힘"],
+      "repeatableRoutines": ["자료 확인", "쟁점 메모", "다음 행동 정리"],
+      "knowledgeAssets": ["상담 전 안내문"],
+      "roleAndDelegationNotes": ["초기 판단은 변호사가 직접 수행"],
+      "feedbackLoops": ["반복 질문을 프로필과 FAQ에 반영"],
+      "bottlenecks": ["즉시 대응 사건은 별도 운영 기준 필요"]
+    },
+    "recommendedMoves": [
+      {
+        "timeframe": "now",
+        "category": "profile",
+        "action": "헤드라인에 '초기 상담 쟁점 정리'를 유지합니다.",
+        "reason": "자료상 확인되는 강점과 직접 연결됩니다.",
+        "successSignal": "승인 가능한 헤드라인 1개"
+      },
+      {
+        "timeframe": "7_days",
+        "category": "evidence",
+        "action": "같은 패턴이 보이는 작성서류 2건을 추가 확인합니다.",
+        "reason": "반복성 근거를 보강해야 합니다.",
+        "successSignal": "식별정보 없는 sourceId 2개 추가"
+      }
+    ],
+    "doNotUsePublicly": true
+  },
   "publicProfile": {
     "headline": "임대차 보증금 분쟁의 초기 상담 쟁점 정리",
     "bio": "임대차 보증금 반환 관련 사안을 검토하고 사건별 초기 쟁점을 정리하는 업무 경험이 확인됩니다.",

@@ -25,6 +25,8 @@ This workflow does not publish, approve, rank, recommend, or expose the lawyer i
 - Do not put case numbers, party names, opposing party names, addresses, unique facts, private messages, or strategy details into public fields.
 - Treat all local materials as confidential.
 - Keep an explicit gap analysis for missing sources, thin evidence, stale materials, contradictions, missing lawyer consent, privacy redaction needs, public wording risk, observed/intended mismatch, and MCP unavailability. Do not hide uncertainty in polished profile prose.
+- Keep an internal profile strategy analysis when enough information exists: current positioning, actual strengths, intended future matters, marketing fit, and operating fit. Do not expose internal weaknesses as public profile copy.
+- Before giving strategic, marketing, or organization recommendations, load `../../references/management-research-basis.md` and use it to ground the recommendation. Do not produce generic SWOT.
 - Apply a profile signal check before treating a strength as upload-ready: repeated work pattern, visible lawyer role, recent support, publicly usable basis, no identifiers, fit with intended practice, low advertising risk, evidence-backed lawyer correction, internal/public separation, and a clear next evidence action.
 - Flag profile anti-patterns immediately: "all matters welcome", specialist/best/top/win-rate wording, famous case or high amount as proof, outcome-centered profile, less-preferred matters in public copy, self-declaration as verified strength, one case framed as a repeated strength, and pending matter details as proof.
 - Ask one short question at a time.
@@ -170,6 +172,16 @@ Offer 2-3 possible positioning directions, such as:
 
 For each option, give tradeoffs and what evidence would make it stronger.
 
+Add a strategy lens before finalizing the direction:
+
+- research basis: the management or marketing lens used, the lawyer-specific evidence, the inference, the action, and the limit
+- SWOT: strengths, weaknesses, opportunities, and threats, all grounded in available evidence or clearly marked as assumptions
+- marketing fit: target client problem, positioning sentence, differentiator, proof signals, message-channel fit, client decision journey, objections, and useful content/profile assets
+- organization fit: intake process, service capacity, repeatable routines, knowledge assets, role/delegation fit, feedback loops, and bottlenecks
+- next moves: `now`, `7_days`, and `30_days`, tagged as `profile`, `marketing`, `organization`, or `evidence`
+
+Keep this strategy lens internal. Use it to decide what the profile should emphasize, not to create aggressive public sales copy.
+
 ### 7. Confirm Intended Profile
 
 Ask:
@@ -199,6 +211,9 @@ Always create the completed personal profile before any JuriSupport upload hando
 ## 프로필 함정
 ## 응답 품질 신호
 ## 포지셔닝 선택지
+## 전략 진단
+## 마케팅 적합성
+## 조직 운영 적합성
 ## JuriSupport 내부 매칭 조건
 ## 프로필에 쓰지 말 것
 ## 부족한 근거와 확인할 사항
@@ -214,7 +229,7 @@ Only prepare JuriSupport upload data if the lawyer asks to put the completed pro
 
 For internal upload preparation, use the public schema in `schemas/lawyer-profile-draft.public.schema.json`. Keep the lawyer-facing explanation simple: "JuriSupport에 올릴 수 있도록 프로필 내용을 정리했습니다." Do not explain the technical shape unless the lawyer explicitly asks.
 
-The upload data must include `profileGapAnalysis`. If `blockingGapCount` is greater than 0, keep `registrationReadiness` as `needs_review` or `not_ready`.
+The upload data must include `profileGapAnalysis` and should include `profileStrategyAnalysis` when strategy information is available. If `blockingGapCount` is greater than 0, keep `registrationReadiness` as `needs_review` or `not_ready`.
 
 Any weekly evidence assignment should be completable within 7 days, measurable, and should increase public usable evidence rather than merely making the wording more attractive.
 
@@ -228,6 +243,9 @@ Create a short review note for the lawyer:
 ## 참고한 자료
 ## 확인된 업무 패턴
 ## 원하는 상담 방향과의 적합성
+## 전략 진단
+## 마케팅 적합성
+## 조직 운영 적합성
 ## 프로필 문구
 ## JuriSupport 내부 매칭 조건
 ## 개인정보 보호를 위해 제외한 내용

@@ -1,0 +1,7 @@
+{"utterance":"현재 제 프로필이랑 제가 잘하는 걸 비교해서 약점과 개선 방향을 분석해줘","expectedSkill":"profile-strategy-audit","rationale":"The user wants a strategic comparison between current profile and strengths."}
+{"utterance":"변호사 프로필을 SWOT 분석해서 앞으로 어떤 포지셔닝이 좋은지 봐줘","expectedSkill":"profile-strategy-audit","rationale":"The request explicitly asks for SWOT-style profile strategy."}
+{"utterance":"홈페이지 소개문이 실제 강점을 잘 살리는지 봐줘","expectedSkill":"profile-strategy-audit","rationale":"The task compares existing profile copy with the lawyer's strengths."}
+{"utterance":"내가 받고 싶은 사건과 지금 프로필이 끌어오는 사건이 맞는지 비교해줘","expectedSkill":"profile-strategy-audit","rationale":"The user asks for current positioning versus intended practice fit."}
+{"utterance":"현재 프로필의 약점, 기회, 위협, 다음 30일 액션을 정리해줘","expectedSkill":"profile-strategy-audit","rationale":"The requested output is a strategy audit with next actions."}
+{"utterance":"마케팅 관점에서 어떤 의뢰인에게 어떤 메시지로 보여야 하는지 분석해줘","expectedSkill":"profile-strategy-audit","rationale":"The user asks for a marketing lens on lawyer profile positioning."}
+{"utterance":"조직론적으로 지금 프로필 방향을 실제 상담 운영으로 감당할 수 있는지 봐줘","expectedSkill":"profile-strategy-audit","rationale":"The user asks for organization and operating-capacity fit."}
