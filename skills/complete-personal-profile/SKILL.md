@@ -99,6 +99,19 @@ Default plan:
 
 Ask the lawyer a follow-up question only after presenting the plan, and make it specific: for example, "이 계획대로 최근 사건 3개와 반복 분야 2개를 먼저 보겠습니다. 제외해야 할 사건이나 특히 민감한 폴더가 있습니까?"
 
+Apply source-combination scenarios when creating the plan:
+
+| Provided sources | Extraction strategy | Do not overclaim |
+|---|---|---|
+| Lawyer-authored documents only | Extract writing style, issue organization, evidence mapping, procedural documents, recurring problem types, and consultation preparation patterns. Ask for matter context only where needed. | Do not infer outcomes, court posture, or that the work repeated across many matters unless the files show it. |
+| Full case records only | Map matter type, procedural stage, document sequence, evidence organization, recency, and recurring issue patterns. Look for the lawyer's visible role before using a pattern publicly. | Do not attribute every document or result to the lawyer if authorship/role is unclear. |
+| Lawyer-authored documents plus case records | Use authored documents as the strongest evidence of the lawyer's work, then use case records to verify matter type, procedural posture, recency, and repetition. | Do not expose record identifiers or turn outcomes into profile claims. |
+| Judgments/decisions only | Extract issue type, procedural posture, and public-safe matter categories. Keep confidence lower unless the lawyer's role is clear. | Do not infer drafting skill, strategy, or client work patterns from the judgment alone. |
+| JuriSupport matter history only | Extract consultation categories, handling patterns, status patterns, preferred matter fit, and communication modes. | Do not infer court performance or detailed legal work product. |
+| Manual explanation only | Capture intended practice, self-declared strengths, consultation modes, and questions to validate later. | Mark strengths as `self_declared` or `insufficient_source`; do not mark upload-ready. |
+
+If mixed sources disagree, show the mismatch and keep it in the gap analysis instead of smoothing it into one profile story.
+
 ### 2. Opening Question
 
 Ask one personal-profile opening question:
