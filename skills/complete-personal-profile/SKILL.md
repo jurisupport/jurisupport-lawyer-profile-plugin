@@ -73,9 +73,31 @@ Then continue with:
 여러 폴더가 있으면 한 줄에 하나씩 붙여넣어 주세요.
 ```
 
-If the lawyer gives a folder, inspect the file list first and summarize what appears to be available before reading deeply.
+If the lawyer gives one or more folders, inspect the file and folder names first and create a source review plan before reading deeply. Do not hand the folder-choice burden back to the lawyer without analysis.
 
-If the folder is large, ask the lawyer which subset to review first.
+For multiple folders, first produce:
+
+```markdown
+## 자료 지도
+| 폴더 | 대략적 자료 유형 | 파일/하위폴더 규모 | 강점 추출에 유용해 보이는 이유 | 주의할 개인정보 |
+
+## 분석 계획
+1. 먼저 볼 자료:
+2. 그 이유:
+3. 표본 추출 방식:
+4. 나중에 보류할 자료:
+5. 확인 질문:
+```
+
+Default plan:
+
+1. Start with the folder most likely to show the lawyer's actual work product: briefs, answers, motions, opinions, memos, consultation notes, or organized case chronologies.
+2. Cross-check with judgments, decisions, and orders to understand issue type and procedural posture.
+3. Use electronic litigation record folders to confirm repeated matter types, document patterns, procedural stages, and recency.
+4. If there are many similar folders, sample across matter type and recency instead of reading every file first: recent matters, repeated categories, and any folder that appears to contain final briefs or judgments.
+5. Keep raw identifiers out of summaries. Use source IDs such as `src-001`.
+
+Ask the lawyer a follow-up question only after presenting the plan, and make it specific: for example, "이 계획대로 최근 사건 3개와 반복 분야 2개를 먼저 보겠습니다. 제외해야 할 사건이나 특히 민감한 폴더가 있습니까?"
 
 ### 2. Opening Question
 
