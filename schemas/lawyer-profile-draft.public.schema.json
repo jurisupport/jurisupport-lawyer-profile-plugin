@@ -3,16 +3,19 @@
   "$id": "https://jurisupport.com/schemas/lawyer-profile-draft.public.schema.json",
   "title": "JuriSupport Lawyer Personal Profile Upload Data",
   "description": "Structured profile data created from a lawyer's completed personal profile when the lawyer wants to upload it to JuriSupport.",
+  "$comment": "Use examples/minimal-profile-draft.json as the canonical minimal upload payload example. Keep this schema synchronized with the server upload_lawyer_search_profile_draft validation.",
   "type": "object",
-  "additionalProperties": true,
+  "additionalProperties": false,
   "required": [
     "profileVersion",
     "sourceMode",
     "lawyerIdentity",
+    "sourceInventory",
     "observedPractice",
     "intendedPractice",
     "internalMatchingControls",
     "publicProfile",
+    "internalEvidenceMap",
     "profileGapAnalysis",
     "compliance",
     "lawyerApprovalRequired",
@@ -25,14 +28,27 @@
     },
     "sourceMode": {
       "type": "string",
-      "enum": ["local_files", "jurisupport_mcp", "mixed", "manual_only"]
+      "enum": [
+        "local_files",
+        "jurisupport_mcp",
+        "mixed",
+        "manual_only"
+      ]
     },
     "lawyerIdentity": {
       "type": "object",
-      "required": ["displayName", "firmName"],
+      "additionalProperties": false,
+      "required": [
+        "lawyerId",
+        "displayName",
+        "firmName"
+      ],
       "properties": {
         "lawyerId": {
-          "type": ["string", "null"]
+          "type": [
+            "string",
+            "null"
+          ]
         },
         "displayName": {
           "type": "string"
@@ -43,61 +59,521 @@
       }
     },
     "sourceInventory": {
-      "type": "array"
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "sourceId",
+          "sourceType",
+          "status",
+          "pathOrReference",
+          "summary",
+          "publicUseAllowed"
+        ],
+        "properties": {
+          "sourceId": {
+            "type": "string"
+          },
+          "sourceType": {
+            "type": "string",
+            "enum": [
+              "electronic_litigation_record",
+              "judgment",
+              "written_work",
+              "jurisupport_matter_history",
+              "lawyer_statement",
+              "other"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "reviewed",
+              "partial",
+              "unavailable",
+              "skipped"
+            ]
+          },
+          "pathOrReference": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          },
+          "publicUseAllowed": {
+            "type": "boolean"
+          }
+        }
+      }
     },
     "observedPractice": {
       "type": "object",
-      "required": ["practiceAreas", "problemTypes", "workPatterns"]
+      "additionalProperties": false,
+      "required": [
+        "practiceAreas",
+        "problemTypes",
+        "workPatterns"
+      ],
+      "properties": {
+        "practiceAreas": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "problemTypes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "workPatterns": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "label",
+              "description",
+              "sourceSupport",
+              "confidence"
+            ],
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "sourceSupport": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "confidence": {
+                "type": "string",
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ]
+              }
+            }
+          }
+        }
+      }
     },
     "intendedPractice": {
       "type": "object",
-      "required": ["preferredMatters", "regions", "consultationModes", "languages"]
+      "additionalProperties": false,
+      "required": [
+        "preferredMatters",
+        "regions",
+        "consultationModes",
+        "languages"
+      ],
+      "properties": {
+        "preferredMatters": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "regions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "consultationModes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "office",
+              "phone",
+              "online",
+              "text",
+              "kakaotalk",
+              "messenger",
+              "other"
+            ]
+          }
+        },
+        "languages": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
     },
     "internalMatchingControls": {
       "type": "object",
-      "description": "Server-side soft ranking controls only. These values may reduce result priority but must not be shown as public profile text, customer-facing APIs, match explanations, or profile copy.",
-      "required": ["visibility", "lessPreferredMatters", "rankingNotes"],
+      "additionalProperties": false,
+      "required": [
+        "visibility",
+        "lessPreferredMatters",
+        "rankingNotes"
+      ],
       "properties": {
         "visibility": {
           "type": "string",
           "const": "internal_soft_ranking_only"
         },
         "lessPreferredMatters": {
-          "type": "array"
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         },
         "rankingNotes": {
-          "type": "array"
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       }
     },
     "profileStrategyAnalysis": {
       "type": "object",
-      "description": "Internal strategy analysis comparing current positioning, actual strengths, marketing fit, and operating fit. This is not customer-facing profile copy.",
+      "additionalProperties": false,
+      "description": "Internal strategy analysis comparing current positioning, demonstrated strengths, marketing fit, and operating fit. This must not be exposed as customer-facing profile copy.",
+      "required": [
+        "summary",
+        "researchBasis",
+        "currentPosition",
+        "comparativeFit",
+        "swot",
+        "marketingLens",
+        "organizationLens",
+        "recommendedMoves",
+        "doNotUsePublicly"
+      ],
       "properties": {
         "summary": {
           "type": "string"
         },
         "researchBasis": {
           "type": "array",
-          "description": "Management or marketing research lenses used in the strategy audit, with lawyer-specific translation and limits."
+          "description": "Management or marketing research lenses used in the strategy audit, with lawyer-specific translation and limits.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "lens",
+              "citation",
+              "application",
+              "lawyerSpecificEvidence",
+              "limit"
+            ],
+            "properties": {
+              "lens": {
+                "type": "string",
+                "enum": [
+                  "market_orientation",
+                  "resource_based_view",
+                  "dynamic_capabilities",
+                  "service_quality",
+                  "service_profit_chain",
+                  "professional_service_firm_management",
+                  "service_dominant_logic",
+                  "swot_limitations",
+                  "other"
+                ]
+              },
+              "citation": {
+                "type": "string"
+              },
+              "application": {
+                "type": "string"
+              },
+              "lawyerSpecificEvidence": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "limit": {
+                "type": "string"
+              }
+            }
+          }
         },
         "currentPosition": {
-          "type": "object"
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "profileSignal",
+            "visibleStrengths",
+            "weaknesses",
+            "positioningRisks"
+          ],
+          "properties": {
+            "profileSignal": {
+              "type": "string"
+            },
+            "visibleStrengths": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "weaknesses": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "positioningRisks": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
         },
         "comparativeFit": {
-          "type": "object"
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "lawyerStatedStrengths",
+            "observedStrengths",
+            "underusedStrengths",
+            "overclaimedAreas",
+            "observedIntendedMismatches"
+          ],
+          "properties": {
+            "lawyerStatedStrengths": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "observedStrengths": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "underusedStrengths": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "overclaimedAreas": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "observedIntendedMismatches": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
         },
         "swot": {
-          "type": "object"
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "strengths",
+            "weaknesses",
+            "opportunities",
+            "threats"
+          ],
+          "properties": {
+            "strengths": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "weaknesses": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "opportunities": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "threats": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
         },
         "marketingLens": {
-          "type": "object"
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "targetSegments",
+            "positioningStatement",
+            "differentiators",
+            "proofSignals",
+            "messageChannelFit",
+            "clientJourneyNotes",
+            "objectionsToAddress",
+            "contentAssetsToCreate"
+          ],
+          "properties": {
+            "targetSegments": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "positioningStatement": {
+              "type": "string"
+            },
+            "differentiators": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "proofSignals": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "messageChannelFit": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "clientJourneyNotes": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "objectionsToAddress": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "contentAssetsToCreate": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
         },
         "organizationLens": {
-          "type": "object"
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "intakeProcessNotes",
+            "serviceCapacityConstraints",
+            "repeatableRoutines",
+            "knowledgeAssets",
+            "roleAndDelegationNotes",
+            "feedbackLoops",
+            "bottlenecks"
+          ],
+          "properties": {
+            "intakeProcessNotes": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "serviceCapacityConstraints": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "repeatableRoutines": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "knowledgeAssets": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "roleAndDelegationNotes": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "feedbackLoops": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "bottlenecks": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
         },
         "recommendedMoves": {
-          "type": "array"
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "timeframe",
+              "category",
+              "action",
+              "reason",
+              "successSignal"
+            ],
+            "properties": {
+              "timeframe": {
+                "type": "string",
+                "enum": [
+                  "now",
+                  "7_days",
+                  "30_days",
+                  "later"
+                ]
+              },
+              "category": {
+                "type": "string",
+                "enum": [
+                  "profile",
+                  "marketing",
+                  "organization",
+                  "evidence"
+                ]
+              },
+              "action": {
+                "type": "string"
+              },
+              "reason": {
+                "type": "string"
+              },
+              "successSignal": {
+                "type": "string"
+              }
+            }
+          }
         },
         "doNotUsePublicly": {
           "type": "boolean",
@@ -107,38 +583,241 @@
     },
     "publicProfile": {
       "type": "object",
-      "required": ["headline", "bio", "problemFit", "strengthCards"]
+      "additionalProperties": false,
+      "required": [
+        "headline",
+        "bio",
+        "problemFit",
+        "strengthCards"
+      ],
+      "properties": {
+        "headline": {
+          "type": "string"
+        },
+        "bio": {
+          "type": "string"
+        },
+        "problemFit": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "strengthCards": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "title",
+              "publicCopy",
+              "sourceBasis",
+              "casePatternConsent",
+              "riskFlags"
+            ],
+            "properties": {
+              "title": {
+                "type": "string"
+              },
+              "publicCopy": {
+                "type": "string"
+              },
+              "sourceBasis": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "case_record",
+                    "judgment",
+                    "written_work",
+                    "jurisupport_history",
+                    "career",
+                    "education",
+                    "publication",
+                    "self_declared",
+                    "insufficient_source"
+                  ]
+                }
+              },
+              "casePatternConsent": {
+                "type": "boolean"
+              },
+              "riskFlags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
     },
     "internalEvidenceMap": {
-      "type": "array"
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "claimId",
+          "claim",
+          "supportingSourceIds",
+          "publicDisclosureRisk",
+          "notes"
+        ],
+        "properties": {
+          "claimId": {
+            "type": "string"
+          },
+          "claim": {
+            "type": "string"
+          },
+          "supportingSourceIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "publicDisclosureRisk": {
+            "type": "string",
+            "enum": [
+              "low",
+              "medium",
+              "high"
+            ]
+          },
+          "notes": {
+            "type": "string"
+          }
+        }
+      }
     },
     "profileGapAnalysis": {
       "type": "object",
-      "description": "Known evidence, consent, privacy, wording, and source gaps that must be visible before JuriSupport draft upload.",
-      "required": ["summary", "gaps", "blockingGapCount", "lastReviewedAt"],
+      "additionalProperties": false,
+      "description": "Evidence, consent, freshness, and wording gaps that must be visible before draft upload or public review.",
+      "required": [
+        "summary",
+        "gaps",
+        "blockingGapCount",
+        "lastReviewedAt"
+      ],
       "properties": {
         "summary": {
           "type": "string"
         },
         "gaps": {
-          "type": "array"
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "gapId",
+              "gapType",
+              "severity",
+              "relatedClaimIds",
+              "relatedSourceIds",
+              "description",
+              "whyItMatters",
+              "recommendedAction",
+              "blocksDraftUpload"
+            ],
+            "properties": {
+              "gapId": {
+                "type": "string"
+              },
+              "gapType": {
+                "type": "string",
+                "enum": [
+                  "missing_source",
+                  "thin_evidence",
+                  "stale_source",
+                  "contradiction",
+                  "missing_lawyer_consent",
+                  "public_wording_risk",
+                  "observed_intended_mismatch",
+                  "privacy_redaction_needed",
+                  "mcp_unavailable",
+                  "other"
+                ]
+              },
+              "severity": {
+                "type": "string",
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ]
+              },
+              "relatedClaimIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "relatedSourceIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "description": {
+                "type": "string"
+              },
+              "whyItMatters": {
+                "type": "string"
+              },
+              "recommendedAction": {
+                "type": "string"
+              },
+              "blocksDraftUpload": {
+                "type": "boolean"
+              }
+            }
+          }
         },
         "blockingGapCount": {
           "type": "integer",
           "minimum": 0
         },
         "lastReviewedAt": {
-          "type": ["string", "null"]
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "ISO 8601 timestamp when available; null for manual drafts without a reliable review timestamp."
         }
       }
     },
     "compliance": {
       "type": "object",
-      "required": ["riskFlags", "reviewNotes", "publicationVerdict"],
+      "additionalProperties": false,
+      "required": [
+        "riskFlags",
+        "reviewNotes",
+        "publicationVerdict"
+      ],
       "properties": {
+        "riskFlags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "reviewNotes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
         "publicationVerdict": {
           "type": "string",
-          "enum": ["draft_upload_ready", "needs_review", "private_only", "do_not_publish"]
+          "enum": [
+            "draft_upload_ready",
+            "needs_review",
+            "private_only",
+            "do_not_publish"
+          ]
         }
       }
     },
@@ -148,7 +827,11 @@
     },
     "registrationReadiness": {
       "type": "string",
-      "enum": ["not_ready", "needs_review", "ready_for_draft_upload"]
+      "enum": [
+        "not_ready",
+        "needs_review",
+        "ready_for_draft_upload"
+      ]
     }
   }
 }

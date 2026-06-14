@@ -65,6 +65,8 @@ Then continue with:
 오늘은 Claude Code 안에서 먼저 변호사님의 개인 프로필을 완성해보겠습니다. 완성한 프로필은 직접 읽고 고쳐 쓸 수 있고, 원하시면 나중에 JuriSupport에도 올릴 수 있습니다.
 참고할 사건자료, 작성서류, 판결문, 홈페이지 소개글, 또는 직접 요약한 내용을 알려주세요.
 
+자료가 많다면 사건 목록이나 경유증표로 많이 수행한 사건유형과 시기별 분포를 먼저 파악할 수 있습니다. 진행중/확정된 사건 폴더 안에서는 판결문, 조정조서나 조정결정문, 화해권고결정문, 결정문, 종국명령처럼 사건의 쟁점과 절차적 결론을 추단할 수 있는 자료를 우선 판단근거로 삼겠습니다. 그다음 변호사님이 직접 작성한 소장, 답변서, 준비서면, 신청서, 의견서, 홈페이지 소개글을 함께 보겠습니다.
+
 자료 폴더가 있으면 폴더의 전체 경로를 붙여넣어 주세요.
 - macOS Finder: 폴더를 선택한 뒤 `Command + Option + C`를 누르면 전체 경로가 복사됩니다.
 - Windows 탐색기: 폴더를 연 뒤 주소창을 클릭하거나 `Alt + D`를 누르고, `Ctrl + C`로 복사합니다.
@@ -76,6 +78,8 @@ Then continue with:
 ```
 
 If the lawyer gives one or more folders, inspect the file and folder names first and create a source review plan before reading deeply. Do not hand the folder-choice burden back to the lawyer without analysis.
+
+When there are many materials, use matter lists, fee-stamp lists, and folder names as strong high-level evidence of repeated matter types, volume, and recency. When reviewing pending or closed matter folders, look inside the selected folders for result-bearing or posture-bearing documents: judgments, mediation records or mediation decisions, settlement recommendation decisions, dispositive decisions or orders, final orders, settlement documents, withdrawal/closing records, or other documents that let you infer issue type, procedural posture, and outcome context.
 
 For multiple folders, first produce:
 
@@ -93,11 +97,13 @@ For multiple folders, first produce:
 
 Default plan:
 
-1. Start with the folder most likely to show the lawyer's actual work product: briefs, answers, motions, opinions, memos, consultation notes, or organized case chronologies.
-2. Cross-check with judgments, decisions, and orders to understand issue type and procedural posture.
-3. Use electronic litigation record folders to confirm repeated matter types, document patterns, procedural stages, and recency.
-4. If there are many similar folders, sample across matter type and recency instead of reading every file first: recent matters, repeated categories, and any folder that appears to contain final briefs or judgments.
-5. Keep raw identifiers out of summaries. Use source IDs such as `src-001`.
+1. Start by mapping the dataset with matter lists, fee-stamp lists, folder names, and other indexes to identify repeated matter types, volume, recency, and candidate folders for deeper review.
+2. Within selected pending or closed matter folders, look first for result-bearing or posture-bearing documents: judgments, mediation records or mediation decisions, settlement recommendation decisions, dispositive decisions or orders, final orders, settlement documents, withdrawal/closing records, or similar documents.
+3. Use those folder-internal documents to identify issue type, procedural posture, approximate outcome context, and which matters are worth deeper review. For pending matters, treat decisions and orders as procedural-posture evidence, not final outcome evidence. Outcome context is internal evidence triage, not public profile copy.
+4. Then read lawyer-authored work product: briefs, answers, motions, opinions, memos, consultation notes, or organized case chronologies, especially where it connects to the result-bearing or posture-bearing materials.
+5. Use broader electronic litigation record folders to confirm repeated matter types, document patterns, procedural stages, and recency.
+6. If there are many similar folders, sample across high-volume categories from matter lists or fee-stamp lists, then recent matters, repeated categories, and folders that contain judgments, decisions, final briefs, or clear authored work product.
+7. Keep raw identifiers out of summaries. Use source IDs such as `src-001`.
 
 Ask the lawyer a follow-up question only after presenting the plan, and make it specific: for example, "이 계획대로 최근 사건 3개와 반복 분야 2개를 먼저 보겠습니다. 제외해야 할 사건이나 특히 민감한 폴더가 있습니까?"
 
@@ -108,7 +114,7 @@ Apply source-combination scenarios when creating the plan:
 | Lawyer-authored documents only | Extract writing style, issue organization, evidence mapping, procedural documents, recurring problem types, and consultation preparation patterns. Ask for matter context only where needed. | Do not infer outcomes, court posture, or that the work repeated across many matters unless the files show it. |
 | Full case records only | Map matter type, procedural stage, document sequence, evidence organization, recency, and recurring issue patterns. Look for the lawyer's visible role before using a pattern publicly. | Do not attribute every document or result to the lawyer if authorship/role is unclear. |
 | Lawyer-authored documents plus case records | Use authored documents as the strongest evidence of the lawyer's work, then use case records to verify matter type, procedural posture, recency, and repetition. | Do not expose record identifiers or turn outcomes into profile claims. |
-| Judgments/decisions only | Extract issue type, procedural posture, and public-safe matter categories. Keep confidence lower unless the lawyer's role is clear. | Do not infer drafting skill, strategy, or client work patterns from the judgment alone. |
+| Result-bearing or posture-bearing documents only | Extract issue type, procedural posture, public-safe matter categories, and outcome context only for internal understanding. This includes judgments, mediation records or mediation decisions, settlement recommendation decisions, dispositive decisions, interim orders, final orders, and similar documents. Keep confidence lower unless the lawyer's role is clear. | Do not infer drafting skill, strategy, or client work patterns from the result/posture document alone. Do not turn an outcome into public performance copy. |
 | JuriSupport matter history only | Extract consultation categories, handling patterns, status patterns, preferred matter fit, and communication modes. | Do not infer court performance or detailed legal work product. |
 | Manual explanation only | Capture intended practice, self-declared strengths, consultation modes, and questions to validate later. | Mark strengths as `self_declared` or `insufficient_source`; do not mark upload-ready. |
 
@@ -193,6 +199,20 @@ Ask:
 - case-by-case intake notes only if the lawyer has already raised them, and only for internal matching
 - whether generalized case-pattern information may be used if the lawyer later uploads the profile to JuriSupport
 
+When preparing upload data, convert lawyer-facing Korean consultation labels to the server enum codes:
+
+| Korean label | Upload enum |
+|---|---|
+| 전화 | `phone` |
+| 온라인 화상, 화상, 비대면 | `online` |
+| 방문, 사무실 방문, 대면 | `office` |
+| 카카오톡, 카톡 | `kakaotalk` |
+| 문자, SMS | `text` |
+| 메신저 | `messenger` |
+| 기타 | `other` |
+
+Email is not a supported consultation mode enum. If the lawyer asks for email consultation, map it to `other` and explain the exact preference in `internalMatchingControls.rankingNotes` or `compliance.reviewNotes`.
+
 ### 8. Completed Personal Profile
 
 Always create the completed personal profile before any JuriSupport upload handoff. Internally you may save it as `jurisupport-personal-profile.md`, but when speaking to the lawyer call it "완성된 프로필" or "개인 프로필".
@@ -227,7 +247,16 @@ Use this as the lawyer's working profile even if they never upload anything to J
 
 Only prepare JuriSupport upload data if the lawyer asks to put the completed profile on JuriSupport or confirms they want to do so after reading the completed profile.
 
-For internal upload preparation, use the public schema in `schemas/lawyer-profile-draft.public.schema.json`. Keep the lawyer-facing explanation simple: "JuriSupport에 올릴 수 있도록 프로필 내용을 정리했습니다." Do not explain the technical shape unless the lawyer explicitly asks.
+For internal upload preparation, use both `examples/minimal-profile-draft.json` and the public schema in `schemas/lawyer-profile-draft.public.schema.json`. Treat the example as the canonical minimal valid shape, then use the schema for field details. If the schema, example, and server validation appear to conflict, follow server validation first, then the example, then the schema.
+
+The upload data must use the nested object shapes shown in the example, including:
+
+- `observedPractice.workPatterns[]` as objects with `label`, `description`, `sourceSupport[]`, and `confidence`
+- `intendedPractice.consultationModes[]` as enum codes only: `online`, `office`, `phone`, `text`, `kakaotalk`, `messenger`, or `other`
+- `publicProfile.strengthCards[]` as objects with `title`, `publicCopy`, `sourceBasis[]`, `casePatternConsent`, and `riskFlags[]`
+- `compliance.riskFlags[]` as compact code-like flags such as `needs_lawyer_approval`; put free-form Korean explanations in `compliance.reviewNotes[]`
+
+Keep the lawyer-facing explanation simple: "JuriSupport에 올릴 수 있도록 프로필 내용을 정리했습니다." Do not explain the technical shape unless the lawyer explicitly asks.
 
 The upload data must include `profileGapAnalysis` and should include `profileStrategyAnalysis` when strategy information is available. If `blockingGapCount` is greater than 0, keep `registrationReadiness` as `needs_review` or `not_ready`.
 

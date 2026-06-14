@@ -36,6 +36,31 @@ Proceed only if:
 
 If any gate is missing, explain what is missing and stop before upload.
 
+## Upload Data Shape
+
+Before calling the tool, compare the prepared upload data against `examples/minimal-profile-draft.json` first and `schemas/lawyer-profile-draft.public.schema.json` second. If the example, schema, and server validation appear to conflict, follow server validation first, then the example, then the schema.
+
+The payload must use server enum codes and nested object shapes, not lawyer-facing Korean labels:
+
+- `observedPractice.workPatterns[]`: `{label, description, sourceSupport[], confidence}`
+- `intendedPractice.consultationModes[]`: `online`, `office`, `phone`, `text`, `kakaotalk`, `messenger`, or `other`
+- `publicProfile.strengthCards[]`: `{title, publicCopy, sourceBasis[], casePatternConsent, riskFlags[]}`
+- `compliance.riskFlags[]`: code-like flags; put free-form Korean notes in `compliance.reviewNotes[]`
+
+## MCP Availability Diagnostics
+
+If `upload_lawyer_search_profile_draft` is not visible in the current session, diagnose before falling back:
+
+1. Run or ask the user to run `claude mcp list`.
+2. If `jurisupport` is disconnected or shows `Failed to connect`, register it with Streamable HTTP:
+
+```bash
+claude mcp add --transport http jurisupport https://api.jurisupport.com/mcp --header "Authorization: Bearer <MCP_TOKEN>"
+```
+
+3. If `jurisupport` is connected but `upload_lawyer_search_profile_draft` is still absent, explain that the server deployment or account permission may not include the upload tool yet. Do not upload manually.
+4. If the MCP was just added or changed during this Claude Code session, explain that the current session may not reload newly added MCP tools until Claude Code is restarted. Ask the lawyer to restart the session before retrying the MCP upload.
+
 ## MCP Upload
 
 If `upload_lawyer_search_profile_draft` is available:
