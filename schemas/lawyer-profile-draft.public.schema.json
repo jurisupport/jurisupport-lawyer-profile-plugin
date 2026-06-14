@@ -77,6 +77,7 @@
           },
           "sourceType": {
             "type": "string",
+            "description": "Use jurisupport_matter_history for JuriSupport matter lists, matter/status history, tasks/todos, deadlines, consultation requests, and request outcomes.",
             "enum": [
               "electronic_litigation_record",
               "judgment",

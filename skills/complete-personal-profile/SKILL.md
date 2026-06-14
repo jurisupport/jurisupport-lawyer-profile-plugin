@@ -14,8 +14,8 @@ This workflow does not publish, approve, rank, recommend, or expose the lawyer i
 
 - Treat this as a personal profile completion tool first.
 - Do not assume JuriSupport upload is the goal. The lawyer may only want a completed profile for their own use.
-- Before reading materials, ask one setup question that confirms whether the lawyer has the `jurisupport` MCP connected and whether they want JuriSupport matter history included now.
-- If the user asks to use JuriSupport matter history or upload to JuriSupport and the MCP tool is unavailable, stop and give MCP installation instructions before continuing that JuriSupport-backed flow.
+- Before reading materials, ask one setup question that confirms whether the lawyer has the `jurisupport` MCP connected and whether they want JuriSupport matter lists, matter history, tasks/todos, and consultation history included now.
+- If the user asks to use JuriSupport matter lists, matter history, tasks/todos, consultation history, or upload to JuriSupport and the MCP tool is unavailable, stop and give MCP installation instructions before continuing that JuriSupport-backed flow.
 - Do not send the lawyer to JuriSupport signup or web consent as the first step. Signup and consent are only the follow-up path after a completed profile exists and the lawyer wants to upload it.
 - In user-facing language, say "프로필을 완성한다" and "JuriSupport에 올린다". Do not lead with filenames, JSON, schema, payload, draft, local environment, or other technical packaging words.
 - Do not upload raw case files.
@@ -42,12 +42,12 @@ Start by asking one setup question and wait for the answer:
 ```text
 프로필을 어떤 방식으로 완성할까요?
 
-1. JuriSupport MCP가 연결되어 있어 사건진행내역까지 참고한다.
+1. JuriSupport MCP가 연결되어 있어 사건목록, 진행내역, 할일까지 참고한다.
 2. 아직 MCP가 없으니 로컬 자료나 직접 설명만으로 먼저 완성한다.
 3. MCP를 먼저 연결하고 나서 시작한다.
 ```
 
-If the lawyer chooses option 1, check whether the `jurisupport` MCP tool is available before reading JuriSupport matter history. If the tool is unavailable, show:
+If the lawyer chooses option 1, check whether the `jurisupport` MCP tool is available before reading JuriSupport matter lists, matter history, tasks/todos, or consultation history. If the tool is unavailable, show:
 
 ```bash
 claude mcp add --transport http jurisupport https://api.jurisupport.com/mcp --header "Authorization: Bearer <MCP_TOKEN>"
@@ -55,7 +55,7 @@ claude mcp add --transport http jurisupport https://api.jurisupport.com/mcp --he
 
 Then ask whether to continue with local-only profile completion for now or stop until MCP is connected.
 
-If the lawyer chooses option 2, proceed with local files or manual explanation only. Mark JuriSupport matter history as unavailable in the source inventory and add an `mcp_unavailable` gap only if the lawyer wants JuriSupport-backed analysis or upload readiness later.
+If the lawyer chooses option 2, proceed with local files or manual explanation only. Mark JuriSupport matter lists, matter history, tasks/todos, and consultation history as unavailable in the source inventory and add an `mcp_unavailable` gap only if the lawyer wants JuriSupport-backed analysis or upload readiness later.
 
 If the lawyer chooses option 3, show the MCP install command and stop before reading materials or starting profile work.
 
@@ -80,6 +80,8 @@ Then continue with:
 If the lawyer gives one or more folders, inspect the file and folder names first and create a source review plan before reading deeply. Do not hand the folder-choice burden back to the lawyer without analysis.
 
 When there are many materials, use matter lists, fee-stamp lists, and folder names as strong high-level evidence of repeated matter types, volume, and recency. When reviewing pending or closed matter folders, look inside the selected folders for result-bearing or posture-bearing documents: judgments, mediation records or mediation decisions, settlement recommendation decisions, dispositive decisions or orders, final orders, settlement documents, withdrawal/closing records, or other documents that let you infer issue type, procedural posture, and outcome context.
+
+For existing JuriSupport users with MCP connected, JuriSupport can be the primary source even without local folders. Use matter lists to identify repeated consultation and matter categories, status/history fields to identify procedural or handling stages, and tasks/todos/deadlines to infer recurring work routines such as intake triage, evidence requests, drafting follow-up, client updates, deadline management, or handoff patterns. Treat task/todo data as internal evidence of work process; do not expose client names, matter IDs, private notes, deadlines, or unique facts in public copy.
 
 For multiple folders, first produce:
 
@@ -115,7 +117,7 @@ Apply source-combination scenarios when creating the plan:
 | Full case records only | Map matter type, procedural stage, document sequence, evidence organization, recency, and recurring issue patterns. Look for the lawyer's visible role before using a pattern publicly. | Do not attribute every document or result to the lawyer if authorship/role is unclear. |
 | Lawyer-authored documents plus case records | Use authored documents as the strongest evidence of the lawyer's work, then use case records to verify matter type, procedural posture, recency, and repetition. | Do not expose record identifiers or turn outcomes into profile claims. |
 | Result-bearing or posture-bearing documents only | Extract issue type, procedural posture, public-safe matter categories, and outcome context only for internal understanding. This includes judgments, mediation records or mediation decisions, settlement recommendation decisions, dispositive decisions, interim orders, final orders, and similar documents. Keep confidence lower unless the lawyer's role is clear. | Do not infer drafting skill, strategy, or client work patterns from the result/posture document alone. Do not turn an outcome into public performance copy. |
-| JuriSupport matter history only | Extract consultation categories, handling patterns, status patterns, preferred matter fit, and communication modes. | Do not infer court performance or detailed legal work product. |
+| JuriSupport matter and task history only | Extract matter categories, consultation categories, status/stage patterns, tasks/todos/deadline patterns, request-handling routines, client-update or follow-up patterns, preferred matter fit, and communication modes. | Do not infer court performance, private legal strategy, or detailed drafting quality. Do not expose matter IDs, task titles that identify clients, deadlines, or private notes. |
 | Manual explanation only | Capture intended practice, self-declared strengths, consultation modes, and questions to validate later. | Mark strengths as `self_declared` or `insufficient_source`; do not mark upload-ready. |
 
 If mixed sources disagree, show the mismatch and keep it in the gap analysis instead of smoothing it into one profile story.
@@ -140,6 +142,7 @@ From the selected materials, summarize only safe, generalized patterns:
 - written work type
 - case-by-case intake or consultation-mode patterns
 - repeated organization or document-review patterns
+- JuriSupport task/todo patterns, deadline-management patterns, client-update routines, request-handling routines, and handoff patterns
 
 Do not copy identifiers or detailed facts.
 
