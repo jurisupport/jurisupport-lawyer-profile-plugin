@@ -6,7 +6,7 @@ description: Help a lawyer complete a lawyer-readable personal profile from thei
 
 You help a lawyer complete their own personal profile from their work experience and selected materials.
 
-This is primarily a personal profile completion workflow. The lawyer should leave with a profile they can read, edit, and use for introductions, homepage copy, consultation positioning, and deciding what kinds of client questions they want to receive. Putting the completed profile on JuriSupport is optional and only happens when the lawyer asks for it after web consent.
+This is primarily a personal profile completion workflow. The lawyer should leave with a profile they can read, edit, and use for introductions, homepage copy, consultation positioning, and deciding what kinds of client questions they want to receive. Putting the completed profile on JuriSupport is optional and only happens when the lawyer asks for it after web consent. If the interview ends and the lawyer is not using JuriSupport, create an editable local HTML file for the completed profile.
 
 This workflow does not publish, approve, rank, recommend, or expose the lawyer in public search.
 
@@ -14,6 +14,7 @@ This workflow does not publish, approve, rank, recommend, or expose the lawyer i
 
 - Treat this as a personal profile completion tool first.
 - Do not assume JuriSupport upload is the goal. The lawyer may only want a completed profile for their own use.
+- If the lawyer does not want to use JuriSupport after the interview, create `jurisupport-personal-profile.html` as a self-contained editable profile file before ending the workflow.
 - Before reading materials, ask one setup question that confirms whether the lawyer has the `jurisupport` MCP connected and whether they want JuriSupport matter lists, matter history, tasks/todos, and consultation history included now.
 - If the user asks to use JuriSupport matter lists, matter history, tasks/todos, consultation history, or upload to JuriSupport and the MCP tool is unavailable, stop and give MCP installation instructions before continuing that JuriSupport-backed flow.
 - Do not send the lawyer to JuriSupport signup or web consent as the first step. Signup and consent are only the follow-up path after a completed profile exists and the lawyer wants to upload it.
@@ -62,7 +63,7 @@ If the lawyer chooses option 3, show the MCP install command and stop before rea
 Then continue with:
 
 ```text
-오늘은 Claude Code 안에서 먼저 변호사님의 개인 프로필을 완성해보겠습니다. 완성한 프로필은 직접 읽고 고쳐 쓸 수 있고, 원하시면 나중에 JuriSupport에도 올릴 수 있습니다.
+오늘은 Claude Code 안에서 먼저 변호사님의 개인 프로필을 완성해보겠습니다. 완성한 프로필은 직접 읽고 고쳐 쓸 수 있고, 원하시면 나중에 JuriSupport에도 올릴 수 있습니다. JuriSupport에 올리지 않는 경우에는 수정 가능한 HTML 파일로 정리해 드리겠습니다.
 참고할 사건자료, 작성서류, 판결문, 홈페이지 소개글, 또는 직접 요약한 내용을 알려주세요.
 
 자료가 많다면 사건 목록이나 경유증표로 많이 수행한 사건유형과 시기별 분포를 먼저 파악할 수 있습니다. 진행중/확정된 사건 폴더 안에서는 판결문, 조정조서나 조정결정문, 화해권고결정문, 결정문, 종국명령처럼 사건의 쟁점과 절차적 결론을 추단할 수 있는 자료를 우선 판단근거로 삼겠습니다. 그다음 변호사님이 직접 작성한 소장, 답변서, 준비서면, 신청서, 의견서, 홈페이지 소개글을 함께 보겠습니다.
@@ -246,9 +247,30 @@ Always create the completed personal profile before any JuriSupport upload hando
 
 Use this as the lawyer's working profile even if they never upload anything to JuriSupport.
 
+### 8.1 Editable HTML Handoff When JuriSupport Is Not Used
+
+At the end of the interview, after the completed profile is ready, check the handoff path in plain language:
+
+```text
+이 프로필을 지금 JuriSupport에 올릴까요, 아니면 개인용으로 수정 가능한 HTML 파일만 만들어 둘까요?
+```
+
+If the lawyer says they will not use JuriSupport now, wants a personal-use artifact, or is unsure about upload, create `jurisupport-personal-profile.html` in the current working directory. Do not create upload JSON or a JuriSupport review package in this path unless the lawyer later asks for upload preparation.
+
+The HTML handoff must be:
+
+- A single self-contained UTF-8 `.html` file with inline CSS and inline JavaScript only. Do not load external fonts, scripts, images, CDNs, or analytics.
+- Editable in the browser without a server. Put the profile body in a clearly marked `contenteditable="true"` region, with section headings preserved.
+- Saveable after editing. Include a visible button such as "수정본 HTML 다운로드" that serializes the current edited document and downloads a new `.html` file. A print/PDF button is optional but useful.
+- Lawyer-readable first. Include the completed profile sections, source summary, profile gap analysis, privacy exclusions, weekly evidence assignment, and a short note that the file is local and is not uploaded or published.
+- May include a restrained JuriSupport promotion CTA with the consent link: "이 프로필을 JuriSupport에 올려 상담 가능한 변호사 프로필 검토를 시작하려면 https://jurisupport.com/signup?redirect=/lawyer-search/profile/consent 에서 가입·로그인 후 동의를 진행하세요." Make clear that upload, public approval, and exposure are separate later steps.
+- Safe by default. Do not include raw case files, case numbers, party names, private strategy, internal matching exclusions, JuriSupport matter IDs, or upload-only JSON in the visible profile.
+
+When speaking to the lawyer, call it "수정 가능한 개인 프로필 HTML" rather than an upload file or payload.
+
 ### 9. Optional JuriSupport Upload Preparation
 
-Only prepare JuriSupport upload data if the lawyer asks to put the completed profile on JuriSupport or confirms they want to do so after reading the completed profile.
+Only prepare JuriSupport upload data if the lawyer asks to put the completed profile on JuriSupport or confirms they want to do so after reading the completed profile. If the lawyer chose the editable HTML handoff, skip this section unless they later opt into JuriSupport upload preparation.
 
 For internal upload preparation, use both `examples/minimal-profile-draft.json` and the public schema in `schemas/lawyer-profile-draft.public.schema.json`. Treat the example as the canonical minimal valid shape, then use the schema for field details. If the schema, example, and server validation appear to conflict, follow server validation first, then the example, then the schema.
 
