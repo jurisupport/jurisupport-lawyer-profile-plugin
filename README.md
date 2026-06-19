@@ -16,28 +16,6 @@ macOS / Linux / WSL:
 
 이 한 줄은 Claude Code 설치 확인, 필요 시 설치, JuriSupport 전체 플러그인 선택 설치, 강점찾기 플러그인 설치, 설치 목록 확인까지 진행합니다. 처음 설치했다면 설치 후 새 터미널에서 `claude`를 실행해 로그인합니다.
 
-## Codex 모델 오류 복구
-
-Codex 실행 중 아래 오류가 나오면 현재 계정에서 지원하지 않는 모델이 설정된 상태입니다.
-
-```text
-The 'gpt-5.3-codex' model is not supported when using Codex with a ChatGPT account.
-```
-
-아래 명령은 `gpt-5.5`, `gpt-5.4`, `gpt-5.4-mini` 순서로 실제 실행 테스트를 하고, 통과한 모델을 Codex 기본 모델로 저장합니다.
-
-Windows PowerShell:
-
-```powershell
-$models = @("gpt-5.5", "gpt-5.4", "gpt-5.4-mini"); foreach ($m in $models) { codex exec -m $m -s read-only --skip-git-repo-check --ephemeral --output-last-message "$env:TEMP\codex-model-ok.txt" "Respond with OK only." *> "$env:TEMP\codex-model-test.log"; if ($LASTEXITCODE -eq 0) { $cfg = "$HOME\.codex\config.toml"; if (Test-Path $cfg) { (Get-Content $cfg) -replace '^model\s*=.*', "model = `"$m`"" | Set-Content $cfg } else { New-Item -ItemType Directory -Force "$HOME\.codex" | Out-Null; "model = `"$m`"" | Set-Content $cfg }; "Codex model fixed: $m"; break } }
-```
-
-macOS / Linux / WSL:
-
-```bash
-for m in gpt-5.5 gpt-5.4 gpt-5.4-mini; do if codex exec -m "$m" -s read-only --skip-git-repo-check --ephemeral --output-last-message /tmp/codex-model-ok.txt "Respond with OK only." >/tmp/codex-model-test.log 2>&1; then mkdir -p ~/.codex; if [ -f ~/.codex/config.toml ] && grep -q '^model[[:space:]]*=' ~/.codex/config.toml; then perl -0pi -e "s/^model\\s*=.*$/model = \\\"$m\\\"/m" ~/.codex/config.toml; else printf '\nmodel = "%s"\n' "$m" >> ~/.codex/config.toml; fi; echo "Codex model fixed: $m"; break; fi; done
-```
-
 JuriSupport 변호사 강점찾기 Claude Code 플러그인은 변호사가 자신의 업무 경험, 사건 자료, 상담 방향을 바탕으로 스스로 읽고 활용할 수 있는 개인 프로필을 완성하도록 돕습니다.
 
 완성된 프로필은 자기소개 정리, 홈페이지·블로그 소개글 초안, 상담 분야 점검, 앞으로 받고 싶은 사건 방향 정리에 활용할 수 있습니다. JuriSupport에 올릴지와 무관하게 브라우저에서 바로 고쳐 쓸 수 있는 HTML 파일을 받고, 그 안에는 JuriSupport에 올릴 수 있는 가입·동의 링크 안내가 함께 들어갑니다. 기술적인 파일 형식이나 업로드 형식을 몰라도 됩니다. 핵심은 "내가 어떤 의뢰인 질문에 잘 답할 수 있는 변호사인지"를 분명하게 정리하는 것입니다.
