@@ -17,6 +17,7 @@ This workflow does not publish, approve, rank, recommend, or expose the lawyer i
 - Create `jurisupport-personal-profile.html` as a self-contained editable profile file before ending the workflow, regardless of whether the lawyer chooses JuriSupport upload.
 - Before reading materials, ask one setup question that confirms whether the lawyer has the `jurisupport` MCP connected and whether they want JuriSupport matter lists, matter history, tasks/todos, and consultation history included now.
 - If the user asks to use JuriSupport matter lists, matter history, tasks/todos, consultation history, or upload to JuriSupport and the MCP tool is unavailable, stop and give MCP installation instructions before continuing that JuriSupport-backed flow.
+- If the full `jurisupport` Claude Code plugin is installed, use it only as an optional evidence helper. Prefer existing helpers such as `/jurisupport:records-sync` and `/jurisupport:case-index` before deep manual review; if they are unavailable, continue without them.
 - Do not send the lawyer to JuriSupport signup or web consent as the first step. Signup and consent are only the follow-up path after a completed profile exists and the lawyer wants to upload it.
 - In user-facing language, say "프로필을 완성한다" and "JuriSupport에 올린다". Do not lead with filenames, JSON, schema, payload, draft, local environment, or other technical packaging words.
 - Do not upload raw case files.
@@ -59,6 +60,13 @@ Then ask whether to continue with local-only profile completion for now or stop 
 If the lawyer chooses option 2, proceed with local files or manual explanation only. Mark JuriSupport matter lists, matter history, tasks/todos, and consultation history as unavailable in the source inventory and add an `mcp_unavailable` gap only if the lawyer wants JuriSupport-backed analysis or upload readiness later.
 
 If the lawyer chooses option 3, show the MCP install command and stop before reading materials or starting profile work.
+
+If the full `jurisupport` plugin is available, add this source route before deep file review:
+
+1. If the lawyer has both 사건기록 and 작성서류 folders, run or guide `/jurisupport:records-sync` first, then use the indexed record/draft patterns to identify repeated matter types, authored work product, recency, and role visibility.
+2. If the lawyer has no JuriSupport MCP but has an `_index.csv` or wants a light matter list, use `/jurisupport:case-index` or the CSV directly to map matter categories, stages, and recency before reading files.
+3. Treat `records-sync` and `case-index` output as internal source inventory, not public profile text. Do not expose case numbers, party names, private notes, or deadlines.
+4. Use `/jurisupport:mock-hearing` only as a challenge pattern for candidate strengths: evidence basis, overclaim risk, public safety, and fit with desired future matters. Do not run a full mock-hearing unless the lawyer asks.
 
 Then continue with:
 
