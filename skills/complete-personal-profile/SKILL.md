@@ -52,10 +52,10 @@ Start by asking one setup question and wait for the answer:
 If the lawyer chooses option 1, check whether the `jurisupport` MCP tool is available before reading JuriSupport matter lists, matter history, tasks/todos, or consultation history. If the tool is unavailable, show:
 
 ```bash
-claude mcp add --transport http jurisupport https://api.jurisupport.com/mcp --header "Authorization: Bearer 복사한_토큰"
+curl -fsSL https://raw.githubusercontent.com/jurisupport/jurisupport-lawyer-profile-plugin/main/connect-mcp.sh | bash
 ```
 
-Explain that only `복사한_토큰` is replaced with the full token from JuriSupport. The user must keep `Authorization: Bearer ` and the surrounding quotes. Do not tell them to pass the token by itself because Claude Code will reject it with `Invalid header format`. Also explain that they must not type `복사한_토큰`, `<`, or `>`, and that any token pasted into chat should be revoked and reissued.
+For Windows users, show `irm https://raw.githubusercontent.com/jurisupport/jurisupport-lawyer-profile-plugin/main/connect-mcp.ps1 | iex` instead. Explain that after running the connector command, they paste only the token from JuriSupport. They must not type `Authorization`, `Bearer`, quotes, `<`, or `>`. Also explain that any token pasted into chat should be revoked and reissued.
 
 Then ask whether to continue with local-only profile completion for now or stop until MCP is connected.
 

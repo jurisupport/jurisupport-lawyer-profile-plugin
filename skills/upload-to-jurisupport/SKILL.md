@@ -15,10 +15,10 @@ Web consent is mandatory. Do not treat chat confirmation as upload consent. In u
 Before checking upload gates, tell the lawyer that upload requires the `jurisupport` MCP connection in Claude Code. If it is missing, stop before upload and show:
 
 ```bash
-claude mcp add --transport http jurisupport https://api.jurisupport.com/mcp --header "Authorization: Bearer 복사한_토큰"
+curl -fsSL https://raw.githubusercontent.com/jurisupport/jurisupport-lawyer-profile-plugin/main/connect-mcp.sh | bash
 ```
 
-Explain that only `복사한_토큰` is replaced with the full token from JuriSupport. The user must keep `Authorization: Bearer ` and the surrounding quotes. Do not tell them to pass the token by itself because Claude Code will reject it with `Invalid header format`. Also explain that they must not type `복사한_토큰`, `<`, or `>`, and that any token pasted into chat should be revoked and reissued.
+For Windows users, show `irm https://raw.githubusercontent.com/jurisupport/jurisupport-lawyer-profile-plugin/main/connect-mcp.ps1 | iex` instead. Explain that after running the connector command, they paste only the token from JuriSupport. They must not type `Authorization`, `Bearer`, quotes, `<`, or `>`. Also explain that any token pasted into chat should be revoked and reissued.
 
 After the profile is complete and the lawyer wants to upload it, the lawyer must complete the JuriSupport web consent page:
 
@@ -57,7 +57,7 @@ If `upload_lawyer_search_profile_draft` is not visible in the current session, d
 2. If `jurisupport` is disconnected or shows `Failed to connect`, register it with Streamable HTTP:
 
 ```bash
-claude mcp add --transport http jurisupport https://api.jurisupport.com/mcp --header "Authorization: Bearer 복사한_토큰"
+curl -fsSL https://raw.githubusercontent.com/jurisupport/jurisupport-lawyer-profile-plugin/main/connect-mcp.sh | bash
 ```
 
 3. If `jurisupport` is connected but `upload_lawyer_search_profile_draft` is still absent, explain that the server deployment or account permission may not include the upload tool yet. Do not upload manually.
