@@ -1,5 +1,5 @@
 ---
-description: Compare a lawyer's current profile or introduction with their strengths and intended matters, then produce a SWOT-style strategy audit and next actions.
+description: 현재 소개문이나 프로필이 실제 강점, 받고 싶은 사건, 상담 운영 방식과 잘 맞는지 비교하고 개선 방향과 다음 행동을 정리합니다.
 ---
 
 # Profile Strategy Audit
