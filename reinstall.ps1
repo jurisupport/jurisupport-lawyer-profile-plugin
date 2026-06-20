@@ -12,7 +12,10 @@ function Invoke-ClaudeIfAvailable {
     param([string[]] $ClaudeArgs)
 
     if (Get-Command claude -ErrorAction SilentlyContinue) {
-        & claude @ClaudeArgs
+        try {
+            & claude @ClaudeArgs *> $null
+        } catch {
+        }
     }
 }
 

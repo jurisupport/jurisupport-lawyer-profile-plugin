@@ -7,9 +7,9 @@ refresh_path() {
   export PATH="$HOME/.local/bin:$HOME/bin:/opt/homebrew/bin:/usr/local/bin:$PATH"
 }
 
-run_if_claude_exists() {
+remove_if_present() {
   if command -v claude >/dev/null 2>&1; then
-    "$@" || true
+    "$@" >/dev/null 2>&1 || true
   fi
 }
 
@@ -17,11 +17,11 @@ echo "Resetting JuriSupport Claude Code plugins..."
 
 refresh_path
 if command -v claude >/dev/null 2>&1; then
-  run_if_claude_exists claude mcp remove jurisupport
-  run_if_claude_exists claude plugin uninstall jurisupport-lawyer-profile --prune -y
-  run_if_claude_exists claude plugin uninstall jurisupport --prune -y
-  run_if_claude_exists claude plugin marketplace remove jurisupport-lawyer-profile-plugin
-  run_if_claude_exists claude plugin marketplace remove jurisupport-plugins
+  remove_if_present claude mcp remove jurisupport
+  remove_if_present claude plugin uninstall jurisupport-lawyer-profile --prune -y
+  remove_if_present claude plugin uninstall jurisupport --prune -y
+  remove_if_present claude plugin marketplace remove jurisupport-lawyer-profile-plugin
+  remove_if_present claude plugin marketplace remove jurisupport-plugins
 else
   echo "Claude Code is not currently installed. Continuing with a fresh install."
 fi

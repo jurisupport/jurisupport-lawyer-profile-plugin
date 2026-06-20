@@ -28,8 +28,16 @@ fi
 
 claude --version
 
-printf "Install the full JuriSupport plugin set too? It can improve profile analysis. [Y/n] "
-read -r answer || answer=""
+answer=""
+if { exec 3<> /dev/tty; } 2>/dev/null; then
+  printf "Install the full JuriSupport plugin set too? It can improve profile analysis. [Y/n] " >&3
+  read -r answer <&3 || answer=""
+  exec 3>&- 3<&-
+else
+  echo "No interactive terminal detected. Installing only the lawyer profile plugin."
+  answer="n"
+fi
+
 case "$answer" in
   [nN]|[nN][oO])
     echo "Installing only Claude Code and the lawyer profile plugin."
