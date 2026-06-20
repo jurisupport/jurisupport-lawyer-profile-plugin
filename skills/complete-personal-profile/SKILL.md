@@ -52,8 +52,10 @@ Start by asking one setup question and wait for the answer:
 If the lawyer chooses option 1, check whether the `jurisupport` MCP tool is available before reading JuriSupport matter lists, matter history, tasks/todos, or consultation history. If the tool is unavailable, show:
 
 ```bash
-claude mcp add --transport http jurisupport https://api.jurisupport.com/mcp --header "Authorization: Bearer <MCP_TOKEN>"
+claude mcp add --transport http jurisupport https://api.jurisupport.com/mcp --header "Authorization: Bearer 복사한_토큰"
 ```
+
+Explain that `복사한_토큰` must be replaced with the full token from JuriSupport, without typing `복사한_토큰`, `<`, or `>`.
 
 Then ask whether to continue with local-only profile completion for now or stop until MCP is connected.
 

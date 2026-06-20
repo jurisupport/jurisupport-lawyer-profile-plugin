@@ -15,8 +15,10 @@ Web consent is mandatory. Do not treat chat confirmation as upload consent. In u
 Before checking upload gates, tell the lawyer that upload requires the `jurisupport` MCP connection in Claude Code. If it is missing, stop before upload and show:
 
 ```bash
-claude mcp add --transport http jurisupport https://api.jurisupport.com/mcp --header "Authorization: Bearer <MCP_TOKEN>"
+claude mcp add --transport http jurisupport https://api.jurisupport.com/mcp --header "Authorization: Bearer 복사한_토큰"
 ```
+
+Explain that `복사한_토큰` must be replaced with the full token from JuriSupport, without typing `복사한_토큰`, `<`, or `>`.
 
 After the profile is complete and the lawyer wants to upload it, the lawyer must complete the JuriSupport web consent page:
 
@@ -55,7 +57,7 @@ If `upload_lawyer_search_profile_draft` is not visible in the current session, d
 2. If `jurisupport` is disconnected or shows `Failed to connect`, register it with Streamable HTTP:
 
 ```bash
-claude mcp add --transport http jurisupport https://api.jurisupport.com/mcp --header "Authorization: Bearer <MCP_TOKEN>"
+claude mcp add --transport http jurisupport https://api.jurisupport.com/mcp --header "Authorization: Bearer 복사한_토큰"
 ```
 
 3. If `jurisupport` is connected but `upload_lawyer_search_profile_draft` is still absent, explain that the server deployment or account permission may not include the upload tool yet. Do not upload manually.
