@@ -18,7 +18,7 @@ Before checking upload gates, tell the lawyer that upload requires the `jurisupp
 claude mcp add --transport http jurisupport https://api.jurisupport.com/mcp --header "Authorization: Bearer 복사한_토큰"
 ```
 
-Explain that `복사한_토큰` must be replaced with the full token from JuriSupport, without typing `복사한_토큰`, `<`, or `>`.
+Explain that only `복사한_토큰` is replaced with the full token from JuriSupport. The user must keep `Authorization: Bearer ` and the surrounding quotes. Do not tell them to pass the token by itself because Claude Code will reject it with `Invalid header format`. Also explain that they must not type `복사한_토큰`, `<`, or `>`, and that any token pasted into chat should be revoked and reissued.
 
 After the profile is complete and the lawyer wants to upload it, the lawyer must complete the JuriSupport web consent page:
 

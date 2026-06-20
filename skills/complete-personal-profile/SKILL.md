@@ -55,7 +55,7 @@ If the lawyer chooses option 1, check whether the `jurisupport` MCP tool is avai
 claude mcp add --transport http jurisupport https://api.jurisupport.com/mcp --header "Authorization: Bearer 복사한_토큰"
 ```
 
-Explain that `복사한_토큰` must be replaced with the full token from JuriSupport, without typing `복사한_토큰`, `<`, or `>`.
+Explain that only `복사한_토큰` is replaced with the full token from JuriSupport. The user must keep `Authorization: Bearer ` and the surrounding quotes. Do not tell them to pass the token by itself because Claude Code will reject it with `Invalid header format`. Also explain that they must not type `복사한_토큰`, `<`, or `>`, and that any token pasted into chat should be revoked and reissued.
 
 Then ask whether to continue with local-only profile completion for now or stop until MCP is connected.
 

@@ -104,7 +104,9 @@ claude mcp add --transport http jurisupport https://api.jurisupport.com/mcp \
 claude mcp get jurisupport
 ```
 
-`복사한_토큰` 부분은 JuriSupport 웹에서 발급받은 토큰 전체로 바꿉니다. `복사한_토큰`이라는 글자나 `<`, `>` 문자는 넣지 않고, 바깥쪽 따옴표는 그대로 둡니다.
+`복사한_토큰` 부분만 JuriSupport 웹에서 발급받은 토큰 전체로 바꿉니다. `Authorization: Bearer `는 지우지 않습니다. 토큰만 따로 넣으면 `Invalid header format` 오류가 납니다. `복사한_토큰`이라는 글자나 `<`, `>` 문자는 넣지 않고, 바깥쪽 따옴표는 그대로 둡니다.
+
+예를 들어 토큰이 `abc123`이면 `--header "Authorization: Bearer abc123"`처럼 입력합니다. 토큰을 채팅이나 다른 사람에게 보냈다면 그 토큰은 폐기하고 새로 발급받습니다.
 
 이미 `jurisupport` MCP가 등록되어 있으면 갱신합니다.
 
