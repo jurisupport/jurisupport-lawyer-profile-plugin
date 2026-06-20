@@ -5,9 +5,35 @@ MARKETPLACE_URL="https://github.com/jurisupport/jurisupport-lawyer-profile-plugi
 MARKETPLACE_NAME="jurisupport-lawyer-profile-plugin"
 PLUGIN_REF="jurisupport-lawyer-profile@jurisupport-lawyer-profile-plugin"
 PLUGIN_NAME="jurisupport-lawyer-profile"
+CONNECT_MCP_URL="https://raw.githubusercontent.com/jurisupport/jurisupport-lawyer-profile-plugin/main/connect-mcp.sh"
 
 refresh_path() {
   export PATH="$HOME/.local/bin:$HOME/bin:/opt/homebrew/bin:/usr/local/bin:$PATH"
+}
+
+should_connect_mcp() {
+  case "${JURISUPPORT_CONNECT_MCP:-}" in
+    1|true|TRUE|yes|YES|y|Y) return 0 ;;
+    0|false|FALSE|no|NO|n|N) return 1 ;;
+  esac
+
+  if [[ -n "${JURISUPPORT_MCP_TOKEN:-}" ]]; then
+    return 0
+  fi
+
+  local answer=""
+  if { exec 3<> /dev/tty; } 2>/dev/null; then
+    printf "Connect JuriSupport MCP now? If you have a token, choose y. [y/N] / 지금 JuriSupport MCP도 연결할까요? 토큰이 있으면 y를 누르세요. [y/N] " >&3
+    read -r answer <&3 || answer=""
+    exec 3>&- 3<&-
+  else
+    return 1
+  fi
+
+  case "$answer" in
+    [yY]|[yY][eE][sS]) return 0 ;;
+    *) return 1 ;;
+  esac
 }
 
 echo "JuriSupport lawyer profile plugin installer / JuriSupport 변호사 강점찾기 플러그인 설치를 시작합니다."
@@ -38,4 +64,10 @@ if ! claude plugin install "$PLUGIN_REF"; then
 fi
 
 claude plugin list
+if should_connect_mcp; then
+  curl -fsSL "$CONNECT_MCP_URL" | bash
+else
+  echo "Skipping MCP connection for now. You can run connect-mcp later. / 지금은 MCP 연결을 건너뜁니다. 나중에 connect-mcp 명령으로 연결할 수 있습니다."
+fi
+
 echo "Done. Open a new Claude Code session to use /jurisupport-lawyer-profile:complete-personal-profile. / 완료되었습니다. 새 Claude Code 세션을 열고 /jurisupport-lawyer-profile:complete-personal-profile 을 실행하세요."

@@ -16,7 +16,7 @@ Mac:
 curl -fsSL https://raw.githubusercontent.com/jurisupport/jurisupport-lawyer-profile-plugin/main/install.sh | bash
 ```
 
-Windows는 PowerShell, Mac은 Terminal 앱에 붙여넣으면 됩니다. 이 한 줄은 Claude Code 설치 확인, 필요 시 설치, 강점찾기 플러그인 설치, 설치 목록 확인까지 진행합니다. 처음 설치했다면 설치 후 새 터미널에서 `claude`를 실행해 로그인합니다.
+Windows는 PowerShell, Mac은 Terminal 앱에 붙여넣으면 됩니다. 이 한 줄은 Claude Code 설치 확인, 필요 시 설치, 강점찾기 플러그인 설치, 설치 목록 확인까지 진행합니다. 설치 중 JuriSupport MCP도 연결할지 묻습니다. 토큰이 있으면 `y`를 누르고 토큰만 붙여넣고, 아직 없으면 Enter를 눌러 건너뜁니다. 처음 설치했다면 설치 후 새 터미널에서 `claude`를 실행해 로그인합니다.
 
 ## 문제가 있을 때 재설치
 
@@ -92,7 +92,7 @@ claude plugin list
 
 ## JuriSupport MCP 연결
 
-JuriSupport 사건목록, 진행내역, 할일/마감, 상담 신청 이력을 참고하거나 프로필을 JuriSupport에 올릴 계획이면 플러그인 실행 전에 MCP를 연결합니다.
+처음 설치할 때 MCP 연결을 건너뛰었거나, 토큰을 새로 발급받았다면 아래 절차로 다시 연결합니다. JuriSupport 사건목록, 진행내역, 할일/마감, 상담 신청 이력을 참고하거나 프로필을 JuriSupport에 올릴 계획이면 플러그인 실행 전에 MCP를 연결합니다.
 
 1. JuriSupport 웹에 로그인합니다.
 2. 프로필 화면의 `MCP 연결` 섹션에서 토큰을 발급합니다.
