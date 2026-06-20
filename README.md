@@ -1,20 +1,39 @@
 # 강점찾기 기반 개인 프로필 완성 툴
 
-## 한 줄 설치
+## 빠른 설치
+
+아래 명령은 터미널에 붙여넣습니다. Claude Code 입력창에 붙여넣으면 `;` 같은 셸 구분자가 URL 일부로 처리되어 설치가 실패할 수 있습니다.
 
 Windows PowerShell:
 
 ```powershell
-if (-not (Get-Command claude -ErrorAction SilentlyContinue)) { irm https://claude.ai/install.ps1 | iex }; $env:Path = [Environment]::GetEnvironmentVariable('Path','Machine') + ';' + [Environment]::GetEnvironmentVariable('Path','User') + ';' + $env:Path; claude --version; $a = Read-Host "JuriSupport 전체 플러그인도 설치할까요? 설치하면 강점찾기가 더 정확해집니다. [Y/n]"; if ($a -notmatch '^(n|no)$') { irm https://raw.githubusercontent.com/jurisupport/jurisupport-plugins/main/windows-bootstrap.ps1 | iex }; claude plugin marketplace add https://github.com/jurisupport/jurisupport-lawyer-profile-plugin.git; claude plugin install jurisupport-lawyer-profile@jurisupport-lawyer-profile-plugin; claude plugin list
+if (-not (Get-Command claude -ErrorAction SilentlyContinue)) { irm https://claude.ai/install.ps1 | iex }
+$env:Path = [Environment]::GetEnvironmentVariable('Path','Machine') + ';' + [Environment]::GetEnvironmentVariable('Path','User') + ';' + $env:Path
+claude --version
+$a = Read-Host "JuriSupport 전체 플러그인도 설치할까요? 설치하면 강점찾기가 더 정확해집니다. [Y/n]"
+if ($a -notmatch '^(n|no)$') { irm https://raw.githubusercontent.com/jurisupport/jurisupport-plugins/main/windows-bootstrap.ps1 | iex }
+claude plugin marketplace add https://github.com/jurisupport/jurisupport-lawyer-profile-plugin.git
+claude plugin install jurisupport-lawyer-profile@jurisupport-lawyer-profile-plugin
+claude plugin list
 ```
 
 macOS / Linux / WSL:
 
 ```bash
-(command -v claude >/dev/null 2>&1 || curl -fsSL https://claude.ai/install.sh | bash); claude --version; printf "JuriSupport 전체 플러그인도 설치할까요? 설치하면 강점찾기가 더 정확해집니다. [Y/n] "; read -r a; case "$a" in [nN]|[nN][oO]) echo "Claude Code와 강점찾기 플러그인만 설치합니다." ;; *) bash <(curl -fsSL https://raw.githubusercontent.com/jurisupport/jurisupport-plugins/main/bootstrap.sh) ;; esac; claude plugin marketplace add https://github.com/jurisupport/jurisupport-lawyer-profile-plugin.git; claude plugin install jurisupport-lawyer-profile@jurisupport-lawyer-profile-plugin; claude plugin list
+(command -v claude >/dev/null 2>&1 || curl -fsSL https://claude.ai/install.sh | bash)
+claude --version
+printf "JuriSupport 전체 플러그인도 설치할까요? 설치하면 강점찾기가 더 정확해집니다. [Y/n] "
+read -r a
+case "$a" in
+  [nN]|[nN][oO]) echo "Claude Code와 강점찾기 플러그인만 설치합니다." ;;
+  *) bash <(curl -fsSL https://raw.githubusercontent.com/jurisupport/jurisupport-plugins/main/bootstrap.sh) ;;
+esac
+claude plugin marketplace add https://github.com/jurisupport/jurisupport-lawyer-profile-plugin.git
+claude plugin install jurisupport-lawyer-profile@jurisupport-lawyer-profile-plugin
+claude plugin list
 ```
 
-이 한 줄은 Claude Code 설치 확인, 필요 시 설치, JuriSupport 전체 플러그인 선택 설치, 강점찾기 플러그인 설치, 설치 목록 확인까지 진행합니다. 처음 설치했다면 설치 후 새 터미널에서 `claude`를 실행해 로그인합니다.
+이 명령은 Claude Code 설치 확인, 필요 시 설치, JuriSupport 전체 플러그인 선택 설치, 강점찾기 플러그인 설치, 설치 목록 확인까지 진행합니다. 처음 설치했다면 설치 후 새 터미널에서 `claude`를 실행해 로그인합니다.
 
 JuriSupport 변호사 강점찾기 Claude Code 플러그인은 변호사가 자신의 업무 경험, 사건 자료, 상담 방향을 바탕으로 스스로 읽고 활용할 수 있는 개인 프로필을 완성하도록 돕습니다.
 
