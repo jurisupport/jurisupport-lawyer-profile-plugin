@@ -4,7 +4,6 @@ $MarketplaceUrl = "https://github.com/jurisupport/jurisupport-lawyer-profile-plu
 $MarketplaceName = "jurisupport-lawyer-profile-plugin"
 $PluginRef = "jurisupport-lawyer-profile@jurisupport-lawyer-profile-plugin"
 $PluginName = "jurisupport-lawyer-profile"
-$FullPluginBootstrapUrl = "https://raw.githubusercontent.com/jurisupport/jurisupport-plugins/main/windows-bootstrap.ps1"
 
 function Update-CurrentPath {
     $machinePath = [Environment]::GetEnvironmentVariable("Path", "Machine")
@@ -43,13 +42,6 @@ if (-not (Get-Command claude -ErrorAction SilentlyContinue)) {
 }
 
 claude --version
-
-$answer = Read-Host "Install the full JuriSupport plugin set too? It can improve profile analysis. [Y/n]"
-if ($answer -notmatch "^(n|no)$") {
-    irm $FullPluginBootstrapUrl | iex
-} else {
-    Write-Host "Installing only Claude Code and the lawyer profile plugin."
-}
 
 Invoke-ClaudeOrUpdate `
     -PrimaryArgs @("plugin", "marketplace", "add", $MarketplaceUrl) `

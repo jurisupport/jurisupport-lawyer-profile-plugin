@@ -16,7 +16,7 @@ Mac:
 curl -fsSL https://raw.githubusercontent.com/jurisupport/jurisupport-lawyer-profile-plugin/main/install.sh | bash
 ```
 
-Windows는 PowerShell, Mac은 Terminal 앱에 붙여넣으면 됩니다. 이 한 줄은 Claude Code 설치 확인, 필요 시 설치, JuriSupport 전체 플러그인 선택 설치, 강점찾기 플러그인 설치, 설치 목록 확인까지 진행합니다. 처음 설치했다면 설치 후 새 터미널에서 `claude`를 실행해 로그인합니다.
+Windows는 PowerShell, Mac은 Terminal 앱에 붙여넣으면 됩니다. 이 한 줄은 Claude Code 설치 확인, 필요 시 설치, 강점찾기 플러그인 설치, 설치 목록 확인까지 진행합니다. 처음 설치했다면 설치 후 새 터미널에서 `claude`를 실행해 로그인합니다.
 
 ## 문제가 있을 때 재설치
 
