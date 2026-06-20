@@ -18,6 +18,22 @@ curl -fsSL https://raw.githubusercontent.com/jurisupport/jurisupport-lawyer-prof
 
 Windows는 PowerShell, Mac은 Terminal 앱에 붙여넣으면 됩니다. 이 한 줄은 Claude Code 설치 확인, 필요 시 설치, JuriSupport 전체 플러그인 선택 설치, 강점찾기 플러그인 설치, 설치 목록 확인까지 진행합니다. 처음 설치했다면 설치 후 새 터미널에서 `claude`를 실행해 로그인합니다.
 
+## 문제가 있을 때 재설치
+
+설치가 꼬였거나 플러그인이 보이지 않으면 아래 한 줄로 JuriSupport 관련 설정만 지우고 다시 설치합니다. Claude Code 자체와 다른 플러그인은 지우지 않습니다.
+
+Windows:
+
+```powershell
+irm https://raw.githubusercontent.com/jurisupport/jurisupport-lawyer-profile-plugin/main/reinstall.ps1 | iex
+```
+
+Mac:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/jurisupport/jurisupport-lawyer-profile-plugin/main/reinstall.sh | bash
+```
+
 JuriSupport 변호사 강점찾기 Claude Code 플러그인은 변호사가 자신의 업무 경험, 사건 자료, 상담 방향을 바탕으로 스스로 읽고 활용할 수 있는 개인 프로필을 완성하도록 돕습니다.
 
 완성된 프로필은 자기소개 정리, 홈페이지·블로그 소개글 초안, 상담 분야 점검, 앞으로 받고 싶은 사건 방향 정리에 활용할 수 있습니다. JuriSupport에 올릴지와 무관하게 브라우저에서 바로 고쳐 쓸 수 있는 HTML 파일을 받고, 그 안에는 JuriSupport에 올릴 수 있는 가입·동의 링크 안내가 함께 들어갑니다. 기술적인 파일 형식이나 업로드 형식을 몰라도 됩니다. 핵심은 "내가 어떤 의뢰인 질문에 잘 답할 수 있는 변호사인지"를 분명하게 정리하는 것입니다.
