@@ -72,8 +72,8 @@ validate_token() {
   case "$code" in
     200|202) return 0 ;;
     401|403)
-      echo "The token was rejected by JuriSupport. Reissue a token and run this connector again. / JuriSupport가 토큰을 거부했습니다. 토큰을 새로 발급한 뒤 다시 연결해 주세요." >&2
-      exit 1
+      echo "The token was rejected by JuriSupport. Paste a new token and try again. / JuriSupport가 토큰을 거부했습니다. 새 토큰을 붙여넣어 다시 시도해 주세요." >&2
+      return 1
       ;;
     *)
       echo "Could not verify the token now (HTTP $code). Continuing registration. / 지금 토큰 검증을 완료하지 못했습니다(HTTP $code). 등록은 계속합니다." >&2
@@ -89,25 +89,32 @@ if ! command -v claude >/dev/null 2>&1 && ! command -v codex >/dev/null 2>&1; th
   exit 1
 fi
 
-raw_token="${JURISUPPORT_MCP_TOKEN:-}"
-if [[ -z "$raw_token" ]]; then
-  if { exec 3<> /dev/tty; } 2>/dev/null; then
-    printf "Paste only the JuriSupport MCP token, then press Enter. Input is hidden. / JuriSupport MCP 토큰만 붙여넣고 Enter를 누르세요. 입력은 화면에 보이지 않습니다: " >&3
-    read -rs raw_token <&3 || raw_token=""
-    printf "\n" >&3
-    exec 3>&- 3<&-
-  else
-    echo "No interactive terminal detected. Set JURISUPPORT_MCP_TOKEN and run again. / 대화형 터미널이 아닙니다. JURISUPPORT_MCP_TOKEN 값을 설정한 뒤 다시 실행해 주세요." >&2
-    exit 1
+while true; do
+  raw_token="${JURISUPPORT_MCP_TOKEN:-}"
+  if [[ -z "$raw_token" ]]; then
+    if { exec 3<> /dev/tty; } 2>/dev/null; then
+      printf "Paste only the JuriSupport MCP token, then press Enter. Input is hidden. / JuriSupport MCP 토큰만 붙여넣고 Enter를 누르세요. 입력은 화면에 보이지 않습니다: " >&3
+      read -rs raw_token <&3 || raw_token=""
+      printf "\n" >&3
+      exec 3>&- 3<&-
+    else
+      echo "No interactive terminal detected. Set JURISUPPORT_MCP_TOKEN and run again. / 대화형 터미널이 아닙니다. JURISUPPORT_MCP_TOKEN 값을 설정한 뒤 다시 실행해 주세요." >&2
+      exit 1
+    fi
   fi
-fi
 
-token="$(normalize_token "$raw_token")"
-if [[ -z "$token" ]]; then
-  echo "Token is empty. Please copy the token from JuriSupport and run again. / 토큰이 비어 있습니다. JuriSupport에서 토큰을 복사한 뒤 다시 실행해 주세요." >&2
-  exit 1
-fi
-validate_token
+  token="$(normalize_token "$raw_token")"
+  if [[ -z "$token" ]]; then
+    echo "Token is empty. Please paste the token again. / 토큰이 비어 있습니다. 다시 붙여넣어 주세요." >&2
+    unset JURISUPPORT_MCP_TOKEN
+    continue
+  fi
+
+  if validate_token; then
+    break
+  fi
+  unset JURISUPPORT_MCP_TOKEN
+done
 
 echo "Registering JuriSupport MCP... / JuriSupport MCP를 등록합니다..."
 if command -v claude >/dev/null 2>&1; then

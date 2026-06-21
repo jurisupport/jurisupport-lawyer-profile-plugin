@@ -45,12 +45,15 @@ function Test-McpToken {
             -ContentType "application/json" `
             -Body $body `
             -UseBasicParsing *> $null
+        return $true
     } catch {
         $statusCode = $_.Exception.Response.StatusCode.value__
         if (($statusCode -eq 401) -or ($statusCode -eq 403)) {
-            throw "The token was rejected by JuriSupport. Reissue a token and run this connector again. / JuriSupport가 토큰을 거부했습니다. 토큰을 새로 발급한 뒤 다시 연결해 주세요."
+            Write-Host "The token was rejected by JuriSupport. Paste a new token and try again. / JuriSupport가 토큰을 거부했습니다. 새 토큰을 붙여넣어 다시 시도해 주세요."
+            return $false
         }
         Write-Warning "Could not verify the token now (HTTP $statusCode). Continuing registration. / 지금 토큰 검증을 완료하지 못했습니다(HTTP $statusCode). 등록은 계속합니다."
+        return $true
     }
 }
 
@@ -61,22 +64,30 @@ if ((-not (Get-Command claude -ErrorAction SilentlyContinue)) -and (-not (Get-Co
     throw "Could not find claude or codex. Install Claude Code or Codex first. / claude 또는 codex 명령어를 찾을 수 없습니다. Claude Code 또는 Codex를 먼저 설치해 주세요."
 }
 
-$rawToken = $env:JURISUPPORT_MCP_TOKEN
-if ([string]::IsNullOrWhiteSpace($rawToken)) {
-    $secureToken = Read-Host "Paste only the JuriSupport MCP token, then press Enter. Input is hidden. / JuriSupport MCP 토큰만 붙여넣고 Enter를 누르세요. 입력은 화면에 보이지 않습니다" -AsSecureString
-    $bstr = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($secureToken)
-    try {
-        $rawToken = [Runtime.InteropServices.Marshal]::PtrToStringBSTR($bstr)
-    } finally {
-        [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($bstr)
+while ($true) {
+    $rawToken = $env:JURISUPPORT_MCP_TOKEN
+    if ([string]::IsNullOrWhiteSpace($rawToken)) {
+        $secureToken = Read-Host "Paste only the JuriSupport MCP token, then press Enter. Input is hidden. / JuriSupport MCP 토큰만 붙여넣고 Enter를 누르세요. 입력은 화면에 보이지 않습니다" -AsSecureString
+        $bstr = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($secureToken)
+        try {
+            $rawToken = [Runtime.InteropServices.Marshal]::PtrToStringBSTR($bstr)
+        } finally {
+            [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($bstr)
+        }
     }
-}
 
-$token = Normalize-Token $rawToken
-if ([string]::IsNullOrWhiteSpace($token)) {
-    throw "Token is empty. Please copy the token from JuriSupport and run again. / 토큰이 비어 있습니다. JuriSupport에서 토큰을 복사한 뒤 다시 실행해 주세요."
+    $token = Normalize-Token $rawToken
+    if ([string]::IsNullOrWhiteSpace($token)) {
+        Write-Host "Token is empty. Please paste the token again. / 토큰이 비어 있습니다. 다시 붙여넣어 주세요."
+        Remove-Item Env:JURISUPPORT_MCP_TOKEN -ErrorAction SilentlyContinue
+        continue
+    }
+
+    if (Test-McpToken $token) {
+        break
+    }
+    Remove-Item Env:JURISUPPORT_MCP_TOKEN -ErrorAction SilentlyContinue
 }
-Test-McpToken $token
 
 Write-Host "Registering JuriSupport MCP... / JuriSupport MCP를 등록합니다..."
 if (Get-Command claude -ErrorAction SilentlyContinue) {
