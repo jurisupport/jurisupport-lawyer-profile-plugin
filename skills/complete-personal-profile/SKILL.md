@@ -18,6 +18,8 @@ This workflow does not publish, approve, rank, recommend, or expose the lawyer i
 - Create `jurisupport-personal-profile.html` as a self-contained editable profile file before ending the workflow, regardless of whether the lawyer chooses JuriSupport upload.
 - Before reading materials, ask one setup question that confirms whether the lawyer has the `jurisupport` MCP connected and whether they want JuriSupport matter lists, matter history, tasks/todos, and consultation history included now.
 - If the user asks to use JuriSupport matter lists, matter history, tasks/todos, consultation history, or upload to JuriSupport and the MCP tool is unavailable, stop and give MCP installation instructions before continuing that JuriSupport-backed flow.
+- When using JuriSupport MCP as a source, use only bounded, profile-safe reads: do not call `get_dashboard`, do not call unfiltered `list_legal_documents`, and call `list_cases` page by page with `limit` no greater than 50.
+- Treat all JuriSupport MCP results as internal evidence. Do not print case numbers, court hearing details, party names, matter IDs, private notes, deadlines, or unique facts in chat or generated profile files; output only aggregated, de-identified patterns.
 - If the full `jurisupport` Claude Code plugin is installed, use it only as an optional evidence helper. Prefer existing helpers such as `/jurisupport:records-sync` and `/jurisupport:case-index` before deep manual review; if they are unavailable, continue without them.
 - Do not send the lawyer to JuriSupport signup or web consent as the first step. Signup and consent are only the follow-up path after a completed profile exists and the lawyer wants to upload it.
 - In user-facing language, say "프로필을 완성한다" and "JuriSupport에 올린다". Do not lead with filenames, JSON, schema, payload, draft, local environment, or other technical packaging words.
@@ -96,6 +98,8 @@ If the lawyer gives one or more folders, inspect the file and folder names first
 When there are many materials, use matter lists, fee-stamp lists, and folder names as strong high-level evidence of repeated matter types, volume, and recency. When reviewing pending or closed matter folders, look inside the selected folders for result-bearing or posture-bearing documents: judgments, mediation records or mediation decisions, settlement recommendation decisions, dispositive decisions or orders, final orders, settlement documents, withdrawal/closing records, or other documents that let you infer issue type, procedural posture, and outcome context.
 
 For existing JuriSupport users with MCP connected, JuriSupport can be the primary source even without local folders. Use matter lists to identify repeated consultation and matter categories, status/history fields to identify procedural or handling stages, and tasks/todos/deadlines to infer recurring work routines such as intake triage, evidence requests, drafting follow-up, client updates, deadline management, or handoff patterns. Treat task/todo data as internal evidence of work process; do not expose client names, matter IDs, private notes, deadlines, or unique facts in public copy.
+
+For JuriSupport MCP reads, never use dashboard data for profile mining and never browse all stored legal documents. Start with `list_cases` using `limit <= 50`; if more cases are needed, increment `page`. Use legal documents only after a specific matter or document type is selected, and keep the output aggregate-only.
 
 For multiple folders, first produce:
 
