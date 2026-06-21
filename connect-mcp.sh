@@ -81,6 +81,13 @@ validate_token() {
   esac
 }
 
+codex_mcp_is_registered() {
+  local info
+  info="$(codex mcp get jurisupport 2>/dev/null || true)"
+  printf '%s' "$info" | grep -q 'url: https://api.jurisupport.com/mcp' &&
+    printf '%s' "$info" | grep -q 'bearer_token_env_var: JURISUPPORT_MCP_TOKEN'
+}
+
 echo "JuriSupport MCP connector / JuriSupport MCP 연결을 시작합니다."
 
 refresh_path
@@ -128,8 +135,12 @@ fi
 if command -v codex >/dev/null 2>&1; then
   persist_codex_token
   export JURISUPPORT_MCP_TOKEN="$token"
-  codex mcp remove jurisupport >/dev/null 2>&1 || true
-  codex mcp add jurisupport --url "$MCP_URL" --bearer-token-env-var JURISUPPORT_MCP_TOKEN
+  if codex_mcp_is_registered; then
+    echo "Codex MCP is already registered. Keeping existing config. / Codex MCP가 이미 등록되어 있어 기존 설정을 유지합니다."
+  else
+    codex mcp remove jurisupport >/dev/null 2>&1 || true
+    codex mcp add jurisupport --url "$MCP_URL" --bearer-token-env-var JURISUPPORT_MCP_TOKEN
+  fi
   codex mcp get jurisupport
   echo "If you will run Codex in this same already-open terminal, run: source ~/.jurisupport-mcp.env / 지금 열린 같은 터미널에서 바로 Codex를 실행하려면 먼저 실행하세요: source ~/.jurisupport-mcp.env"
 else

@@ -57,6 +57,17 @@ function Test-McpToken {
     }
 }
 
+function Test-CodexMcpRegistered {
+    try {
+        $info = & codex mcp get jurisupport 2>$null | Out-String
+    } catch {
+        return $false
+    }
+
+    return ($info -match "url:\s+https://api\.jurisupport\.com/mcp") -and
+        ($info -match "bearer_token_env_var:\s+JURISUPPORT_MCP_TOKEN")
+}
+
 Write-Host "JuriSupport MCP connector / JuriSupport MCP 연결을 시작합니다."
 
 Update-CurrentPath
@@ -105,12 +116,17 @@ if (Get-Command claude -ErrorAction SilentlyContinue) {
 if (Get-Command codex -ErrorAction SilentlyContinue) {
     $env:JURISUPPORT_MCP_TOKEN = $token
     [Environment]::SetEnvironmentVariable("JURISUPPORT_MCP_TOKEN", $token, "User")
-    try {
-        & codex mcp remove jurisupport *> $null
-    } catch {
-    }
 
-    & codex mcp add jurisupport --url $McpUrl --bearer-token-env-var JURISUPPORT_MCP_TOKEN
+    if (Test-CodexMcpRegistered) {
+        Write-Host "Codex MCP is already registered. Keeping existing config. / Codex MCP가 이미 등록되어 있어 기존 설정을 유지합니다."
+    } else {
+        try {
+            & codex mcp remove jurisupport *> $null
+        } catch {
+        }
+
+        & codex mcp add jurisupport --url $McpUrl --bearer-token-env-var JURISUPPORT_MCP_TOKEN
+    }
     & codex mcp get jurisupport
 } else {
     Write-Host "Codex is not installed. Skipping Codex MCP. / Codex가 설치되어 있지 않아 Codex MCP는 건너뜁니다."
