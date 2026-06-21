@@ -2,42 +2,30 @@
 set -euo pipefail
 
 MCP_URL="https://api.jurisupport.com/mcp"
+CODEX_DISABLED_TOOLS=(
+  studio_generate_outline
+  studio_generate_content
+  studio_convert_content
+  studio_chat_edit
+  studio_convert_pdf
+  studio_generate_tags
+  studio_generate_focus_keyword
+  studio_generate_meta_description
+  studio_generate_youtube_title
+  studio_generate_youtube_description
+  studio_generate_thumbnail
+  studio_generate_thumbnail_text
+  studio_generate_illustration
+  studio_get_credits
+  studio_list_snapshots
+  studio_save_snapshot
+  studio_get_snapshot
+  studio_update_snapshot
+  studio_delete_snapshot
+)
 
 refresh_path() {
   export PATH="$HOME/.local/bin:$HOME/bin:/opt/homebrew/bin:/usr/local/bin:$PATH"
-}
-
-shell_quote() {
-  printf "'%s'" "$(printf '%s' "$1" | sed "s/'/'\\\\''/g")"
-}
-
-persist_codex_token() {
-  local env_file="$HOME/.jurisupport-mcp.env"
-  local profile line
-  local profiles=()
-
-  umask 077
-  printf 'export JURISUPPORT_MCP_TOKEN=%s\n' "$(shell_quote "$token")" > "$env_file"
-  chmod 600 "$env_file" >/dev/null 2>&1 || true
-
-  case "$(basename "${SHELL:-}")" in
-    zsh) profiles=("${ZDOTDIR:-$HOME}/.zshrc" "${ZDOTDIR:-$HOME}/.zprofile") ;;
-    bash) profiles=("$HOME/.bashrc" "$HOME/.bash_profile") ;;
-    *) profiles=("$HOME/.profile") ;;
-  esac
-
-  line='[ -f "$HOME/.jurisupport-mcp.env" ] && . "$HOME/.jurisupport-mcp.env"'
-  for profile in "${profiles[@]}"; do
-    mkdir -p "$(dirname "$profile")"
-    touch "$profile"
-    if ! grep -F -q "$line" "$profile"; then
-      printf '\n# JuriSupport MCP token for Codex\n%s\n' "$line" >> "$profile"
-    fi
-  done
-
-  if [[ "$(uname -s)" == "Darwin" ]] && command -v launchctl >/dev/null 2>&1; then
-    launchctl setenv JURISUPPORT_MCP_TOKEN "$token" >/dev/null 2>&1 || true
-  fi
 }
 
 normalize_token() {
@@ -81,11 +69,55 @@ validate_token() {
   esac
 }
 
-codex_mcp_is_registered() {
-  local info
-  info="$(codex mcp get jurisupport 2>/dev/null || true)"
-  printf '%s' "$info" | grep -q 'url: https://api.jurisupport.com/mcp' &&
-    printf '%s' "$info" | grep -q 'bearer_token_env_var: JURISUPPORT_MCP_TOKEN'
+patch_codex_mcp_config() {
+  if ! command -v python3 >/dev/null 2>&1; then
+    echo "python3 is required to write Codex direct-header MCP config. / Codex direct-header MCP 설정 작성에는 python3가 필요합니다." >&2
+    return 1
+  fi
+
+  local disabled_tools
+  disabled_tools="$(IFS=,; printf '%s' "${CODEX_DISABLED_TOOLS[*]}")"
+  CODEX_JURISUPPORT_MCP_TOKEN="$token" \
+  CODEX_JURISUPPORT_DISABLED_TOOLS="$disabled_tools" \
+    python3 <<'PY'
+import json
+import os
+import pathlib
+import re
+
+token = os.environ["CODEX_JURISUPPORT_MCP_TOKEN"]
+disabled_tools = [tool for tool in os.environ["CODEX_JURISUPPORT_DISABLED_TOOLS"].split(",") if tool]
+config_dir = pathlib.Path(os.environ.get("CODEX_HOME", pathlib.Path.home() / ".codex"))
+config_path = config_dir / "config.toml"
+text = config_path.read_text() if config_path.exists() else ""
+
+tool_lines = [
+    f"  {json.dumps(tool)}{',' if index < len(disabled_tools) - 1 else ''}"
+    for index, tool in enumerate(disabled_tools)
+]
+block = "\n".join([
+    "[mcp_servers.jurisupport]",
+    'url = "https://api.jurisupport.com/mcp"',
+    f"http_headers = {{ Authorization = {json.dumps('Bearer ' + token)} }}",
+    "disabled_tools = [",
+    *tool_lines,
+    "]",
+    "startup_timeout_sec = 20",
+    "tool_timeout_sec = 60",
+    "",
+])
+
+pattern = r"(?ms)^\[mcp_servers\.jurisupport\]\n.*?(?=^\[|\Z)"
+if re.search(pattern, text):
+    text = re.sub(pattern, block, text, count=1)
+else:
+    if text and not text.endswith("\n"):
+        text += "\n"
+    text += "\n" + block
+
+config_dir.mkdir(parents=True, exist_ok=True)
+config_path.write_text(text)
+PY
 }
 
 echo "JuriSupport MCP connector / JuriSupport MCP 연결을 시작합니다."
@@ -127,22 +159,17 @@ echo "Registering JuriSupport MCP... / JuriSupport MCP를 등록합니다..."
 if command -v claude >/dev/null 2>&1; then
   claude mcp remove jurisupport >/dev/null 2>&1 || true
   claude mcp add --transport http jurisupport "$MCP_URL" --header "Authorization: Bearer $token"
-  claude mcp get jurisupport
+  echo "Claude MCP registered. / Claude MCP 등록 완료."
 else
   echo "Claude Code is not installed. Skipping Claude MCP. / Claude Code가 설치되어 있지 않아 Claude MCP는 건너뜁니다."
 fi
 
 if command -v codex >/dev/null 2>&1; then
-  persist_codex_token
   export JURISUPPORT_MCP_TOKEN="$token"
-  if codex_mcp_is_registered; then
-    echo "Codex MCP is already registered. Keeping existing config. / Codex MCP가 이미 등록되어 있어 기존 설정을 유지합니다."
-  else
-    codex mcp remove jurisupport >/dev/null 2>&1 || true
-    codex mcp add jurisupport --url "$MCP_URL" --bearer-token-env-var JURISUPPORT_MCP_TOKEN
-  fi
+  codex mcp remove jurisupport >/dev/null 2>&1 || true
+  codex mcp add jurisupport --url "$MCP_URL" --bearer-token-env-var JURISUPPORT_MCP_TOKEN
+  patch_codex_mcp_config
   codex mcp get jurisupport
-  echo "If you will run Codex in this same already-open terminal, run: source ~/.jurisupport-mcp.env / 지금 열린 같은 터미널에서 바로 Codex를 실행하려면 먼저 실행하세요: source ~/.jurisupport-mcp.env"
 else
   echo "Codex is not installed. Skipping Codex MCP. / Codex가 설치되어 있지 않아 Codex MCP는 건너뜁니다."
 fi

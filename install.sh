@@ -81,7 +81,14 @@ should_connect_mcp() {
 
   if command -v codex >/dev/null 2>&1; then
     codex_connected=1
-    codex mcp get jurisupport >/dev/null 2>&1 && codex_connected=0
+    local codex_info
+    codex_info="$(codex mcp get jurisupport 2>/dev/null || true)"
+    if printf '%s' "$codex_info" | grep -q 'url: https://api.jurisupport.com/mcp' &&
+      printf '%s' "$codex_info" | grep -q 'http_headers:' &&
+      ! printf '%s' "$codex_info" | grep -q 'http_headers: -' &&
+      ! printf '%s' "$codex_info" | grep -q 'bearer_token_env_var:'; then
+      codex_connected=0
+    fi
   fi
 
   if [[ "$claude_connected" -eq 0 && "$codex_connected" -eq 0 ]]; then

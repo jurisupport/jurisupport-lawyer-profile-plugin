@@ -119,48 +119,23 @@ claude plugin list
 2. 프로필 화면의 `MCP 연결` 섹션에서 토큰을 발급합니다.
 3. 사용하는 도구에 맞는 MCP 연결 명령을 실행합니다.
 
-Codex:
+Codex / Claude Code:
 
 Mac/Linux:
-
-```bash
-read -rsp "JuriSupport MCP token: " JURISUPPORT_MCP_TOKEN; echo
-export JURISUPPORT_MCP_TOKEN
-codex mcp add jurisupport --url https://api.jurisupport.com/mcp --bearer-token-env-var JURISUPPORT_MCP_TOKEN
-```
-
-Windows PowerShell:
-
-```powershell
-$env:JURISUPPORT_MCP_TOKEN = Read-Host "JuriSupport MCP token"
-codex mcp add jurisupport --url https://api.jurisupport.com/mcp --bearer-token-env-var JURISUPPORT_MCP_TOKEN
-```
-
-Codex는 MCP 토큰을 `JURISUPPORT_MCP_TOKEN` 환경변수에서 읽습니다. 위 연결 스크립트는 Mac/Linux에서는 `~/.jurisupport-mcp.env`, Windows에서는 사용자 환경변수에 값을 저장해 새 세션에서도 Codex가 읽을 수 있게 합니다.
-
-Claude Code:
-
-Windows:
-
-```powershell
-irm https://raw.githubusercontent.com/jurisupport/jurisupport-lawyer-profile-plugin/main/connect-mcp.ps1 | iex
-```
-
-Mac:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/jurisupport/jurisupport-lawyer-profile-plugin/main/connect-mcp.sh | bash
 ```
 
-명령을 실행한 뒤 `JuriSupport MCP 토큰만 붙여넣고 Enter를 누르세요`라는 안내가 나오면 발급받은 토큰만 붙여넣습니다. 입력은 화면에 보이지 않는 것이 정상입니다. `Authorization`, `Bearer`, 따옴표, `<`, `>`는 입력하지 않습니다. 토큰을 채팅이나 다른 사람에게 보냈다면 그 토큰은 폐기하고 새로 발급받습니다.
+Windows PowerShell:
+
+```powershell
+irm https://raw.githubusercontent.com/jurisupport/jurisupport-lawyer-profile-plugin/main/connect-mcp.ps1 | iex
+```
+
+명령을 실행한 뒤 `JuriSupport MCP 토큰만 붙여넣고 Enter를 누르세요`라는 안내가 나오면 발급받은 토큰만 붙여넣습니다. 입력은 화면에 보이지 않는 것이 정상입니다. `Authorization`, `Bearer`, 따옴표, `<`, `>`는 입력하지 않습니다. 연결 스크립트는 Codex에는 `http_headers` 방식으로 등록하고, Studio 도구 묶음만 제외해 Codex MCP 도구 로딩 제한을 피합니다. 토큰을 채팅이나 다른 사람에게 보냈다면 그 토큰은 폐기하고 새로 발급받습니다.
 
 이미 `jurisupport` MCP가 등록되어 있어도 위 명령이 Claude Code와 Codex의 기존 연결을 지우고 다시 등록합니다.
-
-Mac에서 방금 연결한 같은 터미널 창에서 바로 Codex를 실행하려면 먼저 `source ~/.jurisupport-mcp.env`를 실행합니다. 새 터미널을 열면 자동으로 적용됩니다.
-
-```bash
-claude mcp get jurisupport
-```
 
 ## 실행
 

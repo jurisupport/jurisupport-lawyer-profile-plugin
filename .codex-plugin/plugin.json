@@ -1,6 +1,6 @@
 {
   "name": "jurisupport-lawyer-profile",
-  "version": "0.2.24",
+  "version": "0.2.25",
   "description": "Codex에서 변호사가 개인 프로필을 완성하고, JuriSupport MCP 연결 후 웹 동의 기반 업로드까지 준비할 수 있게 돕습니다.",
   "author": {
     "name": "JuriSupport",

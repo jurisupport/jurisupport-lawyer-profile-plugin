@@ -121,8 +121,11 @@ function Should-ConnectMcp {
     if (Get-Command codex -ErrorAction SilentlyContinue) {
         $codexConnected = $false
         try {
-            & codex mcp get jurisupport *> $null
-            $codexConnected = $LASTEXITCODE -eq 0
+            $codexInfo = & codex mcp get jurisupport 2>$null | Out-String
+            $codexConnected = ($codexInfo -match "url:\s+https://api\.jurisupport\.com/mcp") -and
+                ($codexInfo -match "http_headers:") -and
+                ($codexInfo -notmatch "http_headers:\s+-") -and
+                ($codexInfo -notmatch "bearer_token_env_var:")
         } catch {
         }
     }
