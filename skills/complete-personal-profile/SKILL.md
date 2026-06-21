@@ -47,14 +47,14 @@ Start by asking one setup question and wait for the answer:
 ```text
 강점찾기는 변호사님의 실제 업무자료나 설명에서 반복되는 사건유형, 작성 방식, 상담 방식을 찾아 개인 프로필로 정리하는 절차입니다. 막연한 자기소개가 아니라 "어떤 의뢰인 질문에 잘 답할 수 있는지"를 분명하게 만드는 데 도움이 됩니다. 완성한 프로필은 홈페이지·소개글·상담 방향 정리에 바로 활용할 수 있고, 원하실 때만 JuriSupport에 올릴 수 있습니다.
 
-프로필을 어떤 방식으로 완성할까요?
+프로필을 어떤 자료로 완성할까요?
 
-1. JuriSupport MCP가 연결되어 있어 사건목록, 진행내역, 할일까지 참고한다.
-2. 아직 MCP가 없으니 로컬 자료나 직접 설명만으로 먼저 완성한다.
+1. 판결문, 사건기록, 작성서류와 JuriSupport 사건목록·진행내역·할일까지 함께 참고한다.
+2. 판결문, 사건기록, 작성서류 또는 직접 설명만으로 먼저 완성한다.
 3. MCP를 먼저 연결하고 나서 시작한다.
 ```
 
-If the lawyer chooses option 1, check whether the `jurisupport` MCP tool is available before reading JuriSupport matter lists, matter history, tasks/todos, or consultation history. If the tool is unavailable, show:
+If the lawyer chooses option 1, ask for local judgment/case-record/written-work folders first, then check whether the `jurisupport` MCP tool is available before reading JuriSupport matter lists, matter history, tasks/todos, or consultation history. If the tool is unavailable, continue with the local materials if provided and show this command only for the JuriSupport-backed part:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/jurisupport/jurisupport-lawyer-profile-plugin/main/connect-mcp.sh | bash
