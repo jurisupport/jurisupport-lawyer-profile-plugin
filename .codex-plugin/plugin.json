@@ -1,0 +1,36 @@
+{
+  "name": "jurisupport-lawyer-profile",
+  "version": "0.2.22",
+  "description": "Codex에서 변호사가 개인 프로필을 완성하고, JuriSupport MCP 연결 후 웹 동의 기반 업로드까지 준비할 수 있게 돕습니다.",
+  "author": {
+    "name": "JuriSupport",
+    "url": "https://jurisupport.com"
+  },
+  "homepage": "https://github.com/jurisupport/jurisupport-lawyer-profile-plugin",
+  "repository": "https://github.com/jurisupport/jurisupport-lawyer-profile-plugin",
+  "keywords": [
+    "legal",
+    "lawyer-profile",
+    "jurisupport",
+    "korea"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "JuriSupport Lawyer Profile",
+    "shortDescription": "변호사 개인 프로필 완성",
+    "longDescription": "사건자료, 작성서류, 설명을 바탕으로 변호사가 직접 읽고 고쳐 쓸 수 있는 개인 프로필을 완성하고, 원하면 JuriSupport 업로드 준비까지 돕습니다.",
+    "developerName": "JuriSupport",
+    "category": "Legal",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://jurisupport.com",
+    "defaultPrompt": [
+      "개인 프로필을 완성해줘",
+      "프로필 전략을 점검해줘",
+      "JuriSupport 업로드를 준비해줘"
+    ],
+    "brandColor": "#0F766E"
+  }
+}
