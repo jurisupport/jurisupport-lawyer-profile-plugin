@@ -72,7 +72,19 @@ should_connect_mcp() {
     return 0
   fi
 
+  local claude_connected=1
+  local codex_connected=0
+
   if command -v claude >/dev/null 2>&1 && claude mcp list 2>/dev/null | grep -q '^jurisupport:.*Connected'; then
+    claude_connected=0
+  fi
+
+  if command -v codex >/dev/null 2>&1; then
+    codex_connected=1
+    codex mcp get jurisupport >/dev/null 2>&1 && codex_connected=0
+  fi
+
+  if [[ "$claude_connected" -eq 0 && "$codex_connected" -eq 0 ]]; then
     return 1
   fi
 

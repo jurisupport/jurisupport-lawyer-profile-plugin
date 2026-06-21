@@ -22,8 +22,8 @@ function Normalize-Token {
 Write-Host "JuriSupport MCP connector / JuriSupport MCP 연결을 시작합니다."
 
 Update-CurrentPath
-if (-not (Get-Command claude -ErrorAction SilentlyContinue)) {
-    throw "Could not find the claude command. Install Claude Code first. / claude 명령어를 찾을 수 없습니다. Claude Code를 먼저 설치해 주세요."
+if ((-not (Get-Command claude -ErrorAction SilentlyContinue)) -and (-not (Get-Command codex -ErrorAction SilentlyContinue))) {
+    throw "Could not find claude or codex. Install Claude Code or Codex first. / claude 또는 codex 명령어를 찾을 수 없습니다. Claude Code 또는 Codex를 먼저 설치해 주세요."
 }
 
 $rawToken = $env:JURISUPPORT_MCP_TOKEN
@@ -43,11 +43,30 @@ if ([string]::IsNullOrWhiteSpace($token)) {
 }
 
 Write-Host "Registering JuriSupport MCP... / JuriSupport MCP를 등록합니다..."
-try {
-    & claude mcp remove jurisupport *> $null
-} catch {
+if (Get-Command claude -ErrorAction SilentlyContinue) {
+    try {
+        & claude mcp remove jurisupport *> $null
+    } catch {
+    }
+
+    & claude mcp add --transport http jurisupport $McpUrl --header "Authorization: Bearer $token"
+    & claude mcp get jurisupport
+} else {
+    Write-Host "Claude Code is not installed. Skipping Claude MCP. / Claude Code가 설치되어 있지 않아 Claude MCP는 건너뜁니다."
 }
 
-& claude mcp add --transport http jurisupport $McpUrl --header "Authorization: Bearer $token"
-& claude mcp get jurisupport
-Write-Host "Done. Restart Claude Code if this session was already open. / 완료되었습니다. 이미 Claude Code가 열려 있었다면 새로 시작해 주세요."
+if (Get-Command codex -ErrorAction SilentlyContinue) {
+    $env:JURISUPPORT_MCP_TOKEN = $token
+    [Environment]::SetEnvironmentVariable("JURISUPPORT_MCP_TOKEN", $token, "User")
+    try {
+        & codex mcp remove jurisupport *> $null
+    } catch {
+    }
+
+    & codex mcp add jurisupport --url $McpUrl --bearer-token-env-var JURISUPPORT_MCP_TOKEN
+    & codex mcp get jurisupport
+} else {
+    Write-Host "Codex is not installed. Skipping Codex MCP. / Codex가 설치되어 있지 않아 Codex MCP는 건너뜁니다."
+}
+
+Write-Host "Done. Restart Claude Code or Codex if a session was already open. / 완료되었습니다. 이미 Claude Code나 Codex가 열려 있었다면 새로 시작해 주세요."

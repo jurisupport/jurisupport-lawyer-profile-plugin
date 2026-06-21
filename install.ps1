@@ -107,12 +107,28 @@ function Should-ConnectMcp {
         return $true
     }
 
-    try {
-        $mcpList = & claude mcp list 2>$null | Out-String
-        if ($mcpList -match "(?m)^jurisupport:.*Connected") {
-            return $false
+    $claudeConnected = $false
+    $codexConnected = $true
+
+    if (Get-Command claude -ErrorAction SilentlyContinue) {
+        try {
+            $mcpList = & claude mcp list 2>$null | Out-String
+            $claudeConnected = $mcpList -match "(?m)^jurisupport:.*Connected"
+        } catch {
         }
-    } catch {
+    }
+
+    if (Get-Command codex -ErrorAction SilentlyContinue) {
+        $codexConnected = $false
+        try {
+            & codex mcp get jurisupport *> $null
+            $codexConnected = $LASTEXITCODE -eq 0
+        } catch {
+        }
+    }
+
+    if ($claudeConnected -and $codexConnected) {
+        return $false
     }
 
     $answer = Read-Host "Connect JuriSupport MCP now? If you have a token, choose y. [y/N] / 지금 JuriSupport MCP도 연결할까요? 토큰이 있으면 y를 누르세요. [y/N]"

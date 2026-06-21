@@ -16,7 +16,7 @@ Mac:
 curl -fsSL https://raw.githubusercontent.com/jurisupport/jurisupport-lawyer-profile-plugin/main/install.sh | bash
 ```
 
-Windows는 PowerShell, Mac은 Terminal 앱에 붙여넣으면 됩니다. 이 한 줄은 Claude Code 설치 확인, 필요 시 설치, 강점찾기 플러그인 설치, 설치 목록 확인까지 진행합니다. 설치 중 JuriSupport MCP도 연결할지 묻습니다. 토큰이 있으면 `y`를 누르고 토큰만 붙여넣고, 아직 없으면 Enter를 눌러 건너뜁니다. 처음 설치했다면 설치 후 새 터미널에서 `claude`를 실행해 로그인합니다.
+Windows는 PowerShell, Mac은 Terminal 앱에 붙여넣으면 됩니다. 이 한 줄은 Claude Code 설치 확인, 필요 시 설치, 강점찾기 플러그인 설치, 설치 목록 확인까지 진행합니다. 설치 중 JuriSupport MCP도 연결할지 묻습니다. 토큰이 있으면 `y`를 누르고 토큰만 붙여넣고, 아직 없으면 Enter를 눌러 건너뜁니다. Codex가 설치되어 있으면 같은 토큰으로 Codex MCP도 함께 등록합니다. 처음 설치했다면 설치 후 새 터미널에서 `claude`를 실행해 로그인합니다.
 
 Codex에서 쓰려면 Claude Code 설치 스크립트 대신 아래 수동 설치 명령을 사용합니다.
 
@@ -136,7 +136,7 @@ $env:JURISUPPORT_MCP_TOKEN = Read-Host "JuriSupport MCP token"
 codex mcp add jurisupport --url https://api.jurisupport.com/mcp --bearer-token-env-var JURISUPPORT_MCP_TOKEN
 ```
 
-Codex는 토큰 값을 직접 저장하지 않고 `JURISUPPORT_MCP_TOKEN` 환경변수에서 읽습니다. 새 터미널에서도 MCP를 쓰려면 셸 설정 파일이나 비밀관리 도구에 같은 환경변수를 설정합니다.
+Codex는 MCP 토큰을 `JURISUPPORT_MCP_TOKEN` 환경변수에서 읽습니다. 위 연결 스크립트는 Mac/Linux에서는 `~/.jurisupport-mcp.env`, Windows에서는 사용자 환경변수에 값을 저장해 새 세션에서도 Codex가 읽을 수 있게 합니다.
 
 Claude Code:
 
@@ -154,7 +154,7 @@ curl -fsSL https://raw.githubusercontent.com/jurisupport/jurisupport-lawyer-prof
 
 명령을 실행한 뒤 `JuriSupport MCP 토큰만 붙여넣고 Enter를 누르세요`라는 안내가 나오면 발급받은 토큰만 붙여넣습니다. 입력은 화면에 보이지 않는 것이 정상입니다. `Authorization`, `Bearer`, 따옴표, `<`, `>`는 입력하지 않습니다. 토큰을 채팅이나 다른 사람에게 보냈다면 그 토큰은 폐기하고 새로 발급받습니다.
 
-이미 `jurisupport` MCP가 등록되어 있어도 위 명령이 기존 연결을 지우고 다시 등록합니다.
+이미 `jurisupport` MCP가 등록되어 있어도 위 명령이 Claude Code와 Codex의 기존 연결을 지우고 다시 등록합니다.
 
 ```bash
 claude mcp get jurisupport
