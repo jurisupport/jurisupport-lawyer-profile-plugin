@@ -156,6 +156,8 @@ curl -fsSL https://raw.githubusercontent.com/jurisupport/jurisupport-lawyer-prof
 
 이미 `jurisupport` MCP가 등록되어 있어도 위 명령이 Claude Code와 Codex의 기존 연결을 지우고 다시 등록합니다.
 
+Mac에서 방금 연결한 같은 터미널 창에서 바로 Codex를 실행하려면 먼저 `source ~/.jurisupport-mcp.env`를 실행합니다. 새 터미널을 열면 자동으로 적용됩니다.
+
 ```bash
 claude mcp get jurisupport
 ```

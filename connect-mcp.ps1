@@ -16,7 +16,42 @@ function Normalize-Token {
     $normalized = $normalized -replace "^(?i)authorization:\s*bearer\s+", ""
     $normalized = $normalized -replace "^(?i)bearer\s+", ""
     $normalized = $normalized.Trim().Trim("<", ">")
+    $normalized = $normalized -replace "\s+", ""
     return $normalized
+}
+
+function Test-McpToken {
+    param([string] $Token)
+
+    $body = @{
+        jsonrpc = "2.0"
+        id = 1
+        method = "initialize"
+        params = @{
+            protocolVersion = "2025-06-18"
+            capabilities = @{}
+            clientInfo = @{
+                name = "jurisupport-mcp-connector"
+                version = "1.0.0"
+            }
+        }
+    } | ConvertTo-Json -Depth 8 -Compress
+
+    try {
+        Invoke-WebRequest `
+            -Uri $McpUrl `
+            -Method Post `
+            -Headers @{ Authorization = "Bearer $Token"; Accept = "application/json, text/event-stream" } `
+            -ContentType "application/json" `
+            -Body $body `
+            -UseBasicParsing *> $null
+    } catch {
+        $statusCode = $_.Exception.Response.StatusCode.value__
+        if (($statusCode -eq 401) -or ($statusCode -eq 403)) {
+            throw "The token was rejected by JuriSupport. Reissue a token and run this connector again. / JuriSupport가 토큰을 거부했습니다. 토큰을 새로 발급한 뒤 다시 연결해 주세요."
+        }
+        Write-Warning "Could not verify the token now (HTTP $statusCode). Continuing registration. / 지금 토큰 검증을 완료하지 못했습니다(HTTP $statusCode). 등록은 계속합니다."
+    }
 }
 
 Write-Host "JuriSupport MCP connector / JuriSupport MCP 연결을 시작합니다."
@@ -41,6 +76,7 @@ $token = Normalize-Token $rawToken
 if ([string]::IsNullOrWhiteSpace($token)) {
     throw "Token is empty. Please copy the token from JuriSupport and run again. / 토큰이 비어 있습니다. JuriSupport에서 토큰을 복사한 뒤 다시 실행해 주세요."
 }
+Test-McpToken $token
 
 Write-Host "Registering JuriSupport MCP... / JuriSupport MCP를 등록합니다..."
 if (Get-Command claude -ErrorAction SilentlyContinue) {

@@ -14,22 +14,29 @@ shell_quote() {
 persist_codex_token() {
   local env_file="$HOME/.jurisupport-mcp.env"
   local profile line
+  local profiles=()
 
   umask 077
   printf 'export JURISUPPORT_MCP_TOKEN=%s\n' "$(shell_quote "$token")" > "$env_file"
   chmod 600 "$env_file" >/dev/null 2>&1 || true
 
   case "$(basename "${SHELL:-}")" in
-    zsh) profile="${ZDOTDIR:-$HOME}/.zshrc" ;;
-    bash) profile="$HOME/.bashrc" ;;
-    *) profile="$HOME/.profile" ;;
+    zsh) profiles=("${ZDOTDIR:-$HOME}/.zshrc" "${ZDOTDIR:-$HOME}/.zprofile") ;;
+    bash) profiles=("$HOME/.bashrc" "$HOME/.bash_profile") ;;
+    *) profiles=("$HOME/.profile") ;;
   esac
 
   line='[ -f "$HOME/.jurisupport-mcp.env" ] && . "$HOME/.jurisupport-mcp.env"'
-  mkdir -p "$(dirname "$profile")"
-  touch "$profile"
-  if ! grep -F -q "$line" "$profile"; then
-    printf '\n# JuriSupport MCP token for Codex\n%s\n' "$line" >> "$profile"
+  for profile in "${profiles[@]}"; do
+    mkdir -p "$(dirname "$profile")"
+    touch "$profile"
+    if ! grep -F -q "$line" "$profile"; then
+      printf '\n# JuriSupport MCP token for Codex\n%s\n' "$line" >> "$profile"
+    fi
+  done
+
+  if [[ "$(uname -s)" == "Darwin" ]] && command -v launchctl >/dev/null 2>&1; then
+    launchctl setenv JURISUPPORT_MCP_TOKEN "$token" >/dev/null 2>&1 || true
   fi
 }
 
@@ -47,7 +54,31 @@ normalize_token() {
   token="$(printf '%s' "$token" | sed -E 's/^[Aa]uthorization:[[:space:]]*[Bb]earer[[:space:]]+//; s/^[Bb]earer[[:space:]]+//')"
   token="${token#<}"
   token="${token%>}"
+  token="$(printf '%s' "$token" | tr -d '[:space:]')"
   printf '%s' "$token"
+}
+
+validate_token() {
+  local tmp code
+  tmp="$(mktemp)"
+  code="$(curl -sS -o "$tmp" -w '%{http_code}' \
+    -X POST "$MCP_URL" \
+    -H 'Content-Type: application/json' \
+    -H 'Accept: application/json, text/event-stream' \
+    -H "Authorization: Bearer $token" \
+    --data '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-06-18","capabilities":{},"clientInfo":{"name":"jurisupport-mcp-connector","version":"1.0.0"}}}' || true)"
+  rm -f "$tmp"
+
+  case "$code" in
+    200|202) return 0 ;;
+    401|403)
+      echo "The token was rejected by JuriSupport. Reissue a token and run this connector again. / JuriSupport가 토큰을 거부했습니다. 토큰을 새로 발급한 뒤 다시 연결해 주세요." >&2
+      exit 1
+      ;;
+    *)
+      echo "Could not verify the token now (HTTP $code). Continuing registration. / 지금 토큰 검증을 완료하지 못했습니다(HTTP $code). 등록은 계속합니다." >&2
+      ;;
+  esac
 }
 
 echo "JuriSupport MCP connector / JuriSupport MCP 연결을 시작합니다."
@@ -76,6 +107,7 @@ if [[ -z "$token" ]]; then
   echo "Token is empty. Please copy the token from JuriSupport and run again. / 토큰이 비어 있습니다. JuriSupport에서 토큰을 복사한 뒤 다시 실행해 주세요." >&2
   exit 1
 fi
+validate_token
 
 echo "Registering JuriSupport MCP... / JuriSupport MCP를 등록합니다..."
 if command -v claude >/dev/null 2>&1; then
@@ -92,8 +124,9 @@ if command -v codex >/dev/null 2>&1; then
   codex mcp remove jurisupport >/dev/null 2>&1 || true
   codex mcp add jurisupport --url "$MCP_URL" --bearer-token-env-var JURISUPPORT_MCP_TOKEN
   codex mcp get jurisupport
+  echo "If you will run Codex in this same already-open terminal, run: source ~/.jurisupport-mcp.env / 지금 열린 같은 터미널에서 바로 Codex를 실행하려면 먼저 실행하세요: source ~/.jurisupport-mcp.env"
 else
   echo "Codex is not installed. Skipping Codex MCP. / Codex가 설치되어 있지 않아 Codex MCP는 건너뜁니다."
 fi
 
-echo "Done. Restart Claude Code or Codex if a session was already open. / 완료되었습니다. 이미 Claude Code나 Codex가 열려 있었다면 새로 시작해 주세요."
+echo "Done. Quit and reopen Claude Code or the Codex app if it was already open. / 완료되었습니다. 이미 Claude Code나 Codex 앱이 열려 있었다면 완전히 종료한 뒤 다시 열어 주세요."

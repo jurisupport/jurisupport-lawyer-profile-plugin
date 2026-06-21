@@ -43,6 +43,8 @@ This workflow does not publish, approve, rank, recommend, or expose the lawyer i
 Start by asking one setup question and wait for the answer:
 
 ```text
+강점찾기는 변호사님의 실제 업무자료나 설명에서 반복되는 사건유형, 작성 방식, 상담 방식을 찾아 개인 프로필로 정리하는 절차입니다. 막연한 자기소개가 아니라 "어떤 의뢰인 질문에 잘 답할 수 있는지"를 분명하게 만드는 데 도움이 됩니다. 완성한 프로필은 홈페이지·소개글·상담 방향 정리에 바로 활용할 수 있고, 원하실 때만 JuriSupport에 올릴 수 있습니다.
+
 프로필을 어떤 방식으로 완성할까요?
 
 1. JuriSupport MCP가 연결되어 있어 사건목록, 진행내역, 할일까지 참고한다.
