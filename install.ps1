@@ -5,6 +5,8 @@ $MarketplaceName = "jurisupport-lawyer-profile-plugin"
 $PluginRef = "jurisupport-lawyer-profile@jurisupport-lawyer-profile-plugin"
 $PluginName = "jurisupport-lawyer-profile"
 $ConnectMcpUrl = "https://raw.githubusercontent.com/jurisupport/jurisupport-lawyer-profile-plugin/main/connect-mcp.ps1"
+$JuriSupportBootstrapUrl = "https://raw.githubusercontent.com/jurisupport/jurisupport-plugins/main/windows-bootstrap.ps1"
+$LegalTerminalInstallUrl = "https://raw.githubusercontent.com/jurisupport/legal-terminal/main/install.ps1"
 
 function Update-CurrentPath {
     $machinePath = [Environment]::GetEnvironmentVariable("Path", "Machine")
@@ -29,6 +31,69 @@ function Invoke-ClaudeOrUpdate {
     }
 }
 
+function Test-EnvTruthy {
+    param([string] $Name)
+    $value = [Environment]::GetEnvironmentVariable($Name)
+    return $value -match "^(1|true|yes|y|on)$"
+}
+
+function Read-YesNoDefaultYes {
+    param([string] $Question)
+    $answer = Read-Host "$Question [Y/n]"
+    return $answer -notmatch "^(n|no)$"
+}
+
+function Test-JuriSupportPluginsInstalled {
+    $repoDir = Join-Path $env:USERPROFILE "jurisupport-plugins"
+    if (Test-Path (Join-Path $repoDir "install.sh")) {
+        return $true
+    }
+
+    try {
+        $plugins = & claude plugin list 2>$null | Out-String
+        return $plugins -match "jurisupport@jurisupport-plugins|jurisupport-plugins|songmu-legal|korean-law"
+    } catch {
+        return $false
+    }
+}
+
+function Invoke-JuriSupportPluginsInstaller {
+    if (Test-EnvTruthy "JURISUPPORT_LAWYER_PROFILE_SKIP_JURISUPPORT") {
+        return
+    }
+
+    if (Test-JuriSupportPluginsInstalled) {
+        Write-Host "jurisupport-plugins already looks installed. / jurisupport-plugins가 이미 설치된 것으로 보입니다."
+        return
+    }
+
+    if (-not (Read-YesNoDefaultYes "Install jurisupport-plugins first? / 먼저 JuriSupport 송무 플러그인 묶음을 설치할까요?")) {
+        Write-Host "Skipping jurisupport-plugins. / JuriSupport 송무 플러그인 설치를 건너뜁니다."
+        return
+    }
+
+    $previousSkipLawyerProfile = $env:JURISUPPORT_SKIP_LAWYER_PROFILE
+    $previousSkipLegalTerminal = $env:JURISUPPORT_SKIP_LEGAL_TERMINAL
+    try {
+        $env:JURISUPPORT_SKIP_LAWYER_PROFILE = "1"
+        $env:JURISUPPORT_SKIP_LEGAL_TERMINAL = "1"
+        irm $JuriSupportBootstrapUrl | iex
+        Update-CurrentPath
+    } finally {
+        if ($null -eq $previousSkipLawyerProfile) {
+            Remove-Item Env:JURISUPPORT_SKIP_LAWYER_PROFILE -ErrorAction SilentlyContinue
+        } else {
+            $env:JURISUPPORT_SKIP_LAWYER_PROFILE = $previousSkipLawyerProfile
+        }
+
+        if ($null -eq $previousSkipLegalTerminal) {
+            Remove-Item Env:JURISUPPORT_SKIP_LEGAL_TERMINAL -ErrorAction SilentlyContinue
+        } else {
+            $env:JURISUPPORT_SKIP_LEGAL_TERMINAL = $previousSkipLegalTerminal
+        }
+    }
+}
+
 function Should-ConnectMcp {
     if ($env:JURISUPPORT_CONNECT_MCP -match "^(1|true|yes|y)$") {
         return $true
@@ -42,8 +107,47 @@ function Should-ConnectMcp {
         return $true
     }
 
+    try {
+        $mcpList = & claude mcp list 2>$null | Out-String
+        if ($mcpList -match "(?m)^jurisupport:.*Connected") {
+            return $false
+        }
+    } catch {
+    }
+
     $answer = Read-Host "Connect JuriSupport MCP now? If you have a token, choose y. [y/N] / 지금 JuriSupport MCP도 연결할까요? 토큰이 있으면 y를 누르세요. [y/N]"
     return $answer -match "^(y|yes)$"
+}
+
+function Invoke-LegalTerminalInstaller {
+    if (Test-EnvTruthy "JURISUPPORT_LAWYER_PROFILE_SKIP_LEGAL_TERMINAL") {
+        return
+    }
+
+    if (-not (Read-YesNoDefaultYes "Install legal-terminal too? / legal-terminal 앱도 설치할까요?")) {
+        Write-Host "Skipping legal-terminal. / legal-terminal 설치를 건너뜁니다."
+        return
+    }
+
+    $previousInstallJuriSupport = $env:LEGAL_TERMINAL_INSTALL_JURI_SUPPORT
+    $previousInstallLawyerProfile = $env:LEGAL_TERMINAL_INSTALL_LAWYER_PROFILE
+    try {
+        $env:LEGAL_TERMINAL_INSTALL_JURI_SUPPORT = "0"
+        $env:LEGAL_TERMINAL_INSTALL_LAWYER_PROFILE = "0"
+        irm $LegalTerminalInstallUrl | iex
+    } finally {
+        if ($null -eq $previousInstallJuriSupport) {
+            Remove-Item Env:LEGAL_TERMINAL_INSTALL_JURI_SUPPORT -ErrorAction SilentlyContinue
+        } else {
+            $env:LEGAL_TERMINAL_INSTALL_JURI_SUPPORT = $previousInstallJuriSupport
+        }
+
+        if ($null -eq $previousInstallLawyerProfile) {
+            Remove-Item Env:LEGAL_TERMINAL_INSTALL_LAWYER_PROFILE -ErrorAction SilentlyContinue
+        } else {
+            $env:LEGAL_TERMINAL_INSTALL_LAWYER_PROFILE = $previousInstallLawyerProfile
+        }
+    }
 }
 
 Write-Host "JuriSupport lawyer profile plugin installer / JuriSupport 변호사 강점찾기 플러그인 설치를 시작합니다."
@@ -60,6 +164,7 @@ if (-not (Get-Command claude -ErrorAction SilentlyContinue)) {
 }
 
 claude --version
+Invoke-JuriSupportPluginsInstaller
 
 Write-Host "Installing the JuriSupport lawyer profile plugin... / JuriSupport 변호사 강점찾기 플러그인을 설치합니다..."
 
@@ -77,5 +182,7 @@ if (Should-ConnectMcp) {
 } else {
     Write-Host "Skipping MCP connection for now. You can run connect-mcp later. / 지금은 MCP 연결을 건너뜁니다. 나중에 connect-mcp 명령으로 연결할 수 있습니다."
 }
+
+Invoke-LegalTerminalInstaller
 
 Write-Host "Done. Open a new Claude Code session to use /jurisupport-lawyer-profile:complete-personal-profile. / 완료되었습니다. 새 Claude Code 세션을 열고 /jurisupport-lawyer-profile:complete-personal-profile 을 실행하세요."
