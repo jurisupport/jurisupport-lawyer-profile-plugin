@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>강점프로필 예시</title>
+<style>
+  :root { --line:#e2e2e2; --ink:#1f2328; --sub:#57606a; --accent:#2f6f4f; --bg:#fafafa; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+    line-height:1.7; }
+  .wrap { max-width:860px; margin:0 auto; padding:32px 20px 80px; }
+  header.top { display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:space-between;
+    position:sticky; top:0; background:var(--bg); padding:12px 0; border-bottom:1px solid var(--line); z-index:10; }
+  header.top h1 { font-size:18px; margin:0; }
+  .btns button { font-size:14px; padding:8px 14px; margin-left:8px; border:1px solid var(--line);
+    background:#fff; border-radius:8px; cursor:pointer; }
+  .btns button.primary { background:var(--accent); color:#fff; border-color:var(--accent); }
+  .note { font-size:13px; color:var(--sub); background:#fff; border:1px dashed var(--line);
+    border-radius:10px; padding:12px 14px; margin:16px 0; }
+  #profile { background:#fff; border:1px solid var(--line); border-radius:12px; padding:24px 26px; margin-top:18px; }
+  #profile:focus { outline:2px solid var(--accent); outline-offset:2px; }
+  #profile h2 { font-size:17px; margin:26px 0 8px; padding-bottom:6px; border-bottom:2px solid var(--accent); color:var(--accent); }
+  #profile h2:first-child { margin-top:0; }
+  #profile h3 { font-size:15px; margin:16px 0 4px; }
+  #profile p, #profile li { font-size:14.5px; }
+  #profile table { width:100%; border-collapse:collapse; margin:10px 0; font-size:13.5px; }
+  #profile th, #profile td { border:1px solid var(--line); padding:7px 9px; text-align:left; vertical-align:top; }
+  #profile th { background:#f3f6f4; }
+  .lead { font-size:16px; font-weight:600; background:#f3f6f4; padding:12px 14px; border-radius:8px; }
+  .cta { margin-top:24px; background:#0f2e22; color:#eafff4; border-radius:12px; padding:20px 22px; }
+  .cta h2 { color:#fff; border:0; margin-top:0; }
+  .cta a { color:#9be7c4; word-break:break-all; }
+  .cta small { color:#bcd8cb; display:block; margin-top:8px; }
+  .gap { background:#fff7ed; border:1px solid #fed7aa; }
+  footer { font-size:12px; color:var(--sub); margin-top:30px; text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <h1>강점프로필 예시 <span style="font-weight:400;color:var(--sub);font-size:13px;">(공개용 샘플)</span></h1>
+  </header>
+
+  <div class="note">
+    이 화면은 실제 강점프로필 생성 HTML을 바탕으로 만든 <b>공개용 예시</b>입니다.
+    사건번호·당사자명·금액·내부 검토 메모처럼 특정될 수 있는 정보는 제외했습니다.
+  </div>
+
+  <div id="profile" contenteditable="true">
+    <h2>첫 포지셔닝</h2>
+    <p class="lead">"민사 분쟁에서 쟁점을 정리하고, 필요한 절차를 차분히 안내하는 실무형 변호사."</p>
+    <p>· 공개할 업무 방향: <b>민사 분쟁 · 보전처분 · 채권 회수</b> &nbsp;|&nbsp; 지역: <b>전국</b> &nbsp;|&nbsp; 상담: 방문 · 전화 · 온라인 · 메신저</p>
+    <p style="color:var(--sub);">※ 예시 화면입니다. 실제 프로필에는 변호사가 공개하기로 한 내용만 들어갑니다.</p>
+
+    <h2>검토한 자료</h2>
+    <ul>
+      <li>익명화한 사건 기록과 작성서류의 업무 경향</li>
+      <li>공개 가능한 상담 분야와 상담 방식</li>
+      <li>식별정보를 제외한 범위에서 확인한 반복 업무 패턴</li>
+    </ul>
+
+    <h2>확인된 업무 패턴</h2>
+    <ul>
+      <li><b>서면 중심</b>: 주장과 증거를 정리해 절차별 서면으로 구성</li>
+      <li><b>보전처분</b>: 권리 보전을 먼저 검토해야 하는 사건 대응</li>
+      <li><b>채권 회수</b>: 판결 이후 회수 절차와 집행 가능성 점검</li>
+      <li><b>상담 준비</b>: 사건 단계와 필요한 자료를 먼저 정리</li>
+    </ul>
+
+    <h2>앞으로 받고 싶은 질문과 사건</h2>
+    <ul>
+      <li>"받을 돈이나 권리가 있는데 절차를 어떻게 시작하나" 묻는 의뢰인</li>
+      <li>가압류·가처분으로 먼저 권리를 잡아두어야 하는 분쟁</li>
+      <li>판결이나 채권은 있는데 실제 회수가 막힌 사건</li>
+      <li>서면으로 쟁점을 정리해 본안에서 다퉈야 하는 민사 분쟁</li>
+    </ul>
+
+    <h2>프로필 문구 후보</h2>
+    <table>
+      <tr><th>문구</th><th>근거</th><th>과장 위험</th></tr>
+      <tr><td>민사 분쟁을 서면으로 차분히 정리합니다</td><td>반복된 서면 작성 경험</td><td>낮음</td></tr>
+      <tr><td>가압류·가처분 등 필요한 절차를 함께 검토합니다</td><td>보전처분 관련 업무 경험</td><td>낮음</td></tr>
+      <tr><td>받을 돈, 집행 가능성까지 살펴봅니다</td><td>채권 회수 관련 업무 경험</td><td>낮음</td></tr>
+      <tr><td>사건 단계에 맞춰 필요한 자료를 정리합니다</td><td>상담 전 자료 정리 경험</td><td>낮음</td></tr>
+    </table>
+
+    <h2>상담 안내</h2>
+    <p>사무실 방문 · 전화 · 온라인 화상 · 카카오톡/문자로 상담합니다. 사건 성격에 따라 절차와 방향을 함께 정리합니다.
+    <span style="color:var(--sub);">(채널별 응답기준을 직접 적어 넣으면 신뢰신호가 됩니다.)</span></p>
+
+    <h2 style="border-color:#fb923c;color:#c2410c;">부족한 근거와 확인할 사항</h2>
+    <ul>
+      <li>공개 프로필에는 실제 공개 가능한 업무 범위만 반영해야 합니다.</li>
+      <li>상담 방식은 변호사가 실제로 유지할 수 있는 채널만 선택해야 합니다.</li>
+      <li>채널별 응답기준은 게시 전 직접 확인해야 합니다.</li>
+      <li>성과·결과 데이터는 의도적으로 미사용.</li>
+    </ul>
+
+    <h2>개인정보 보호를 위해 제외한 내용</h2>
+    <p>당사자명·상대방명·사건번호·법원별 고유사실·구체적 금액·진행중 사건 전략·내부 메모.
+    "전문/최고/승소율/보장" 등 우월·성과 표현도 사용하지 않았습니다.</p>
+
+    <h2>게시 전 확인할 내용</h2>
+    <ol>
+      <li>공개해도 되는 소개 문구인지 다시 확인합니다.</li>
+      <li>상담 방식과 응답 기준을 실제 운영 가능 범위로 정리합니다.</li>
+      <li>프로필에 표시할 이름·사무소명·상담 방식을 직접 확정합니다.</li>
+    </ol>
+  </div>
+
+  <div class="cta">
+    <h2>JuriSupport에 올리고 싶으신가요?</h2>
+    <p>이 프로필을 JuriSupport에 올려 상담 가능한 변호사 프로필 검토를 시작하려면, 먼저 아래에서 가입·로그인 후 동의를 진행하세요.</p>
+    <a href="https://jurisupport.com/signup?redirect=/lawyer-search/profile/consent">https://jurisupport.com/signup?redirect=/lawyer-search/profile/consent</a>
+    <small>업로드 · 공개 승인 · 노출은 모두 동의 이후의 별도 단계입니다. 이 HTML 파일 자체는 어디에도 올라가지 않습니다.</small>
+  </div>
+
+  <footer>강점프로필 공개용 예시 · 실제 게시 전 변호사가 공개 범위를 직접 확인합니다.</footer>
+</div>
+
+</body>
+</html>
