@@ -159,13 +159,17 @@ while ($true) {
 
 Write-Host "Registering JuriSupport MCP... / JuriSupport MCP를 등록합니다..."
 if (Get-Command claude -ErrorAction SilentlyContinue) {
-    try {
-        & claude mcp remove jurisupport *> $null
-    } catch {
+    # 사용자 전체(-s user)로 등록해야 어느 사건 폴더에서 claude를 열어도 연결된다.
+    # 기본값(local)은 이 스크립트를 실행한 폴더에서만 보인다. 예전 방식으로 이 폴더에 남은 등록도 지운다.
+    foreach ($scope in @("local", "user")) {
+        try {
+            & claude mcp remove jurisupport -s $scope *> $null
+        } catch {
+        }
     }
 
-    & claude mcp add --transport http jurisupport $McpUrl --header "Authorization: Bearer $token"
-    Write-Host "Claude MCP registered. / Claude MCP 등록 완료."
+    & claude mcp add -s user --transport http jurisupport $McpUrl --header "Authorization: Bearer $token"
+    Write-Host "Claude MCP registered for all folders. / Claude MCP를 모든 폴더에서 쓰도록 등록했습니다."
 } else {
     Write-Host "Claude Code is not installed. Skipping Claude MCP. / Claude Code가 설치되어 있지 않아 Claude MCP는 건너뜁니다."
 }
