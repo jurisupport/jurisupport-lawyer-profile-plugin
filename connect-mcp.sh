@@ -157,9 +157,12 @@ done
 
 echo "Registering JuriSupport MCP... / JuriSupport MCP를 등록합니다..."
 if command -v claude >/dev/null 2>&1; then
-  claude mcp remove jurisupport >/dev/null 2>&1 || true
-  claude mcp add --transport http jurisupport "$MCP_URL" --header "Authorization: Bearer $token"
-  echo "Claude MCP registered. / Claude MCP 등록 완료."
+  # 사용자 전체(-s user)로 등록해야 어느 사건 폴더에서 claude를 열어도 연결된다.
+  # 기본값(local)은 이 스크립트를 실행한 폴더에서만 보인다. 예전 방식으로 이 폴더에 남은 등록도 지운다.
+  claude mcp remove jurisupport -s local >/dev/null 2>&1 || true
+  claude mcp remove jurisupport -s user >/dev/null 2>&1 || true
+  claude mcp add -s user --transport http jurisupport "$MCP_URL" --header "Authorization: Bearer $token"
+  echo "Claude MCP registered for all folders. / Claude MCP를 모든 폴더에서 쓰도록 등록했습니다."
 else
   echo "Claude Code is not installed. Skipping Claude MCP. / Claude Code가 설치되어 있지 않아 Claude MCP는 건너뜁니다."
 fi
